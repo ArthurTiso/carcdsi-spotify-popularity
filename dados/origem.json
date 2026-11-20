@@ -1,0 +1,7 @@
+{
+  "nome": "Spotify Tracks Dataset",
+  "fonte": "https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset",
+  "autor": "Maharshi Pandya (Kaggle)",
+  "linhas_originais": 114000,
+  "linhas_apos_limpeza": 89740
+}

@@ -1,0 +1,46 @@
+{
+  "etapas": [
+    {
+      "etapa": "0. CSV original",
+      "linhas": 114000
+    },
+    {
+      "etapa": "1. Sem valores ausentes em artista/álbum/nome",
+      "linhas": 113999
+    },
+    {
+      "etapa": "2. Sem linhas 100% duplicadas",
+      "linhas": 113549
+    },
+    {
+      "etapa": "3. Um registro por track_id (gêneros consolidados)",
+      "linhas": 89740
+    },
+    {
+      "etapa": "4. Sem popularidade zero (conjunto usado no modelo principal)",
+      "linhas": 80393
+    }
+  ],
+  "track_ids_em_mais_de_um_genero": 16299,
+  "musicas_unicas_artista_nome": 81206,
+  "musicas_com_mais_de_um_track_id": 4747,
+  "tempo_zero_para_ausente": 157,
+  "time_signature_0_ou_1_para_ausente": 1008,
+  "popularidade_zero": {
+    "faixas": 9347,
+    "percentual": 10.42,
+    "mesma_musica_tem_outra_versao_com_popularidade": 2881,
+    "artista_tem_outras_faixas_com_popularidade": 6185
+  },
+  "popularidade_sem_zeros": {
+    "count": 80393.0,
+    "mean": 37.07,
+    "std": 18.15,
+    "min": 1.0,
+    "25%": 22.0,
+    "50%": 37.0,
+    "75%": 50.0,
+    "max": 100.0
+  },
+  "generos": 114
+}

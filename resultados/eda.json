@@ -1,0 +1,97 @@
+{
+  "faixas": 89740,
+  "faixas_sem_zeros": 80393,
+  "r2_media_por_genero_sem_zeros": 0.4396,
+  "correlacao_spearman_com_popularidade": {
+    "instrumentalness": -0.1968,
+    "speechiness": -0.0989,
+    "energy": -0.0678,
+    "liveness": -0.0373,
+    "duracao_min": -0.0337,
+    "tempo": -0.0191,
+    "mode": -0.0074,
+    "valence": -0.0017,
+    "explicit": 0.0585,
+    "acousticness": 0.0599,
+    "danceability": 0.0639,
+    "loudness": 0.0775
+  },
+  "pares_mais_correlacionados": {
+    "energy x loudness": 0.749,
+    "energy x acousticness": 0.704,
+    "loudness x acousticness": 0.524,
+    "danceability x valence": 0.463,
+    "energy x speechiness": 0.353
+  },
+  "generos_maior_mediana": {
+    "metal": 63.0,
+    "house": 65.0,
+    "electro": 67.0,
+    "pop": 67.0,
+    "dance": 69.0
+  },
+  "generos_menor_mediana": {
+    "latin": 2.0,
+    "iranian": 6.0,
+    "romance": 7.0,
+    "detroit-techno": 8.0,
+    "chicago-house": 10.0
+  },
+  "generos_mais_zeros_percentual": {
+    "country": 59.1,
+    "latin": 60.9,
+    "romance": 61.4,
+    "iranian": 65.6,
+    "jazz": 74.2
+  },
+  "popularidade_media_por_explicit": {
+    "0": 36.7,
+    "1": 40.96
+  },
+  "popularidade_media_por_mode": {
+    "0": 37.26,
+    "1": 36.96
+  },
+  "media_atributos_zero_vs_demais": {
+    "danceability": {
+      "popularidade_zero": 0.556,
+      "popularidade_maior_que_zero": 0.563
+    },
+    "energy": {
+      "popularidade_zero": 0.578,
+      "popularidade_maior_que_zero": 0.641
+    },
+    "loudness": {
+      "popularidade_zero": -8.93,
+      "popularidade_maior_que_zero": -8.449
+    },
+    "speechiness": {
+      "popularidade_zero": 0.074,
+      "popularidade_maior_que_zero": 0.089
+    },
+    "acousticness": {
+      "popularidade_zero": 0.39,
+      "popularidade_maior_que_zero": 0.321
+    },
+    "instrumentalness": {
+      "popularidade_zero": 0.126,
+      "popularidade_maior_que_zero": 0.179
+    },
+    "liveness": {
+      "popularidade_zero": 0.19,
+      "popularidade_maior_que_zero": 0.22
+    },
+    "valence": {
+      "popularidade_zero": 0.483,
+      "popularidade_maior_que_zero": 0.468
+    },
+    "tempo": {
+      "popularidade_zero": 118.466,
+      "popularidade_maior_que_zero": 122.715
+    },
+    "duracao_min": {
+      "popularidade_zero": 3.565,
+      "popularidade_maior_que_zero": 3.849
+    }
+  }
+}

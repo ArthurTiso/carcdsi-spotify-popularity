@@ -1,0 +1,19 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+
+# Gerados pelos scripts (reprodutíveis)
+dados/processado/
+modelos/
+resultados/previsoes/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.ipynb_checkpoints/
