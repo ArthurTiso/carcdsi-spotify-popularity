@@ -1,0 +1,187 @@
+{
+  "avaliacao": {
+    "modelo": "HistGradientBoosting",
+    "teste": {
+      "MAE": 9.241,
+      "MSE": 177.259,
+      "RMSE": 13.314,
+      "R2": 0.4588
+    },
+    "referencia_dummy": {
+      "MAE": 15.086,
+      "MSE": 327.544,
+      "RMSE": 18.098,
+      "R2": -0.0
+    },
+    "referencia_media_genero": {
+      "MAE": 9.845,
+      "MSE": 188.919,
+      "RMSE": 13.745,
+      "R2": 0.4232
+    },
+    "n_treino": 64327,
+    "n_teste": 16066,
+    "divisao": "80/20 GroupShuffleSplit por musica_id, random_state=42",
+    "validacao_cruzada": "GroupKFold 5 folds no treino, métrica RMSE",
+    "popularidade_zero": "removida (alvo ausente)"
+  },
+  "modelos": {
+    "Dummy (média)": {
+      "cv_rmse": 18.162,
+      "hiperparametros": {},
+      "teste": {
+        "MAE": 15.086,
+        "MSE": 327.544,
+        "RMSE": 18.098,
+        "R2": -0.0
+      }
+    },
+    "Média do gênero": {
+      "cv_rmse": 13.592,
+      "hiperparametros": {},
+      "teste": {
+        "MAE": 9.845,
+        "MSE": 188.919,
+        "RMSE": 13.745,
+        "R2": 0.4232
+      }
+    },
+    "Ridge": {
+      "cv_rmse": 13.515,
+      "hiperparametros": {
+        "alpha": 1
+      },
+      "teste": {
+        "MAE": 9.788,
+        "MSE": 187.04,
+        "RMSE": 13.676,
+        "R2": 0.429
+      }
+    },
+    "Random Forest": {
+      "cv_rmse": 14.041,
+      "hiperparametros": {
+        "min_samples_leaf": 20,
+        "max_features": 0.5,
+        "max_depth": 30
+      },
+      "teste": {
+        "MAE": 10.424,
+        "MSE": 199.303,
+        "RMSE": 14.117,
+        "R2": 0.3915
+      }
+    },
+    "HistGradientBoosting": {
+      "cv_rmse": 13.176,
+      "hiperparametros": {
+        "min_samples_leaf": 20,
+        "max_leaf_nodes": 63,
+        "max_iter": 600,
+        "learning_rate": 0.05,
+        "l2_regularization": 10.0
+      },
+      "teste": {
+        "MAE": 9.241,
+        "MSE": 177.259,
+        "RMSE": 13.314,
+        "R2": 0.4588
+      }
+    }
+  },
+  "importancia_permutacao": {
+    "danceability": {
+      "media": 0.0959,
+      "desvio": 0.0172
+    },
+    "energy": {
+      "media": 0.2584,
+      "desvio": 0.0369
+    },
+    "loudness": {
+      "media": 0.2339,
+      "desvio": 0.0199
+    },
+    "speechiness": {
+      "media": 0.1099,
+      "desvio": 0.0167
+    },
+    "acousticness": {
+      "media": 0.091,
+      "desvio": 0.0186
+    },
+    "instrumentalness": {
+      "media": 0.3073,
+      "desvio": 0.0444
+    },
+    "liveness": {
+      "media": 0.0289,
+      "desvio": 0.0085
+    },
+    "valence": {
+      "media": 0.0953,
+      "desvio": 0.0176
+    },
+    "tempo": {
+      "media": 0.0437,
+      "desvio": 0.0202
+    },
+    "duracao_min": {
+      "media": 0.1749,
+      "desvio": 0.0237
+    },
+    "explicit": {
+      "media": 0.0606,
+      "desvio": 0.0084
+    },
+    "mode": {
+      "media": -0.0187,
+      "desvio": 0.0057
+    },
+    "key": {
+      "media": 0.0105,
+      "desvio": 0.0133
+    },
+    "time_signature": {
+      "media": 0.0099,
+      "desvio": 0.004
+    },
+    "track_genre": {
+      "media": 6.9341,
+      "desvio": 0.1096
+    }
+  },
+  "experimentos": {
+    "principal (agrupada, sem zeros)": {
+      "MAE": 9.241,
+      "MSE": 177.259,
+      "RMSE": 13.314,
+      "R2": 0.4588,
+      "faixas_teste_com_mesma_musica_no_treino": 0
+    },
+    "com zeros (agrupada)": {
+      "MAE": 11.648,
+      "MSE": 275.274,
+      "RMSE": 16.591,
+      "R2": 0.353,
+      "n_treino": 71730,
+      "n_teste": 18010,
+      "faixas_teste_com_mesma_musica_no_treino": 0
+    },
+    "divisao aleatoria (sem zeros)": {
+      "MAE": 9.115,
+      "MSE": 169.522,
+      "RMSE": 13.02,
+      "R2": 0.4787,
+      "n_treino": 64314,
+      "n_teste": 16079,
+      "faixas_teste_com_mesma_musica_no_treino": 1216
+    }
+  },
+  "versoes": {
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  },
+  "busca_rapida": true,
+  "tempo_total_s": 553
+}

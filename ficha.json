@@ -1,0 +1,17 @@
+{
+  "track_genre": "pop",
+  "danceability": 0.72,
+  "energy": 0.68,
+  "loudness": -5.5,
+  "speechiness": 0.05,
+  "acousticness": 0.15,
+  "instrumentalness": 0.0,
+  "liveness": 0.12,
+  "valence": 0.55,
+  "tempo": 118.0,
+  "duracao_min": 3.3,
+  "explicit": 0,
+  "mode": 1,
+  "key": 5,
+  "time_signature": 4
+}
