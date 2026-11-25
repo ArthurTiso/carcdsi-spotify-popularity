@@ -48,6 +48,10 @@ def carregar_artefato(caminho=ARQUIVO_MODELO):
     if not caminho.exists():
         raise FileNotFoundError("Modelo não encontrado. Execute treinar.py primeiro.")
     artefato = joblib.load(caminho)
+    esperadas = {"modelo", "nome", "avaliacao", "categorias", "contexto_treino",
+                 "importancia_permutacao", "versoes"}
+    if not isinstance(artefato, dict) or not esperadas <= artefato.keys():
+        raise ValueError("Modelo desatualizado ou incompleto. Execute treinar.py de novo.")
     if artefato["versoes"] != {"pandas": pd.__version__, "sklearn": sklearn.__version__}:
         raise ValueError("Use as mesmas versões de pandas/scikit-learn do treino "
                          f"({artefato['versoes']}).")

@@ -56,6 +56,45 @@ para a seção de Metodologia e de Discussão do artigo.
 - `duration_ms` → `duracao_min` (mais fácil de ler na interface e na explicação).
 - `explicit` → 0/1; `key`, `time_signature` e `track_genre` → one-hot.
 
+## D6 · Seleção e avaliação dos modelos (treinar.py)
+
+- Modelos comparados: os quatro da Atividade 2 (DummyRegressor, Ridge,
+  Random Forest, HistGradientBoosting) + uma referência extra, **média do
+  gênero**, para medir quanto os atributos de áudio acrescentam ao gênero.
+- Hiperparâmetros ajustados com `GridSearchCV` (Ridge) e `RandomizedSearchCV`
+  (Random Forest: 8 combinações; HistGradientBoosting: 15) usando
+  **GroupKFold com 5 folds só no treino** e RMSE como critério.
+- O melhor modelo é escolhido pelo **RMSE da validação cruzada**, não pelo teste;
+  o teste (20%, nunca visto) só é usado para relatar MAE, MSE, RMSE e R².
+- As previsões são limitadas a 0..100 antes de calcular as métricas.
+- Importância dos atributos por **permutação** no teste (6.000 faixas, 5
+  repetições), medida como aumento do RMSE; o gênero é permutado como um único
+  atributo (e não coluna one-hot por coluna).
+- Experimentos extras com os mesmos hiperparâmetros: (a) incluindo a
+  popularidade zero; (b) com divisão aleatória em vez de agrupada, para medir o
+  efeito do vazamento entre versões da mesma música.
+
+## D7 · Explicação e LLM (prever.py / processar.py / app.py)
+
+- **SHAP** (`TreeExplainer`) explica cada previsão; as colunas one-hot são
+  somadas de volta ao atributo original, e o programa confere que
+  valor base + contribuições = previsão antes de gravar o resultado.
+- A **LLM não calcula nada**: ela recebe o JSON produzido pelo modelo (relato e
+  chat) ou pede ao programa que execute o modelo por *tool calling*
+  (assistente). Isso segue o padrão das aulas: o programa executa e devolve; a
+  LLM interpreta.
+- No assistente, só o gênero é obrigatório; os atributos que a descrição não
+  permite estimar recebem o **valor típico (mediana) do gênero no treino**, e o
+  resultado informa quais campos foram estimados e quais foram preenchidos.
+- O gênero é restrito por `enum` na definição da ferramenta (114 gêneros) e a
+  ficha passa pela mesma validação explícita de `prever.py`.
+- Modelo de LLM padrão: `nvidia/nemotron-3.5-bolt-e4b` (o `openai/gpt-oss-20b`
+  usado nas aulas foi retirado do catálogo da NVIDIA). Nos testes, o
+  `nemotron-3.5-lightning-30b-a3b` também funcionou, mas foi ~2,5× mais lento.
+- O intervalo exibido é **previsão ± MAE do teste**; os prompts deixam claro
+  que não é a faixa de popularidade do gênero (a LLM confundiu os dois nos
+  primeiros testes).
+
 ## Nota para a discussão (artigo) · R² esperado é baixo
 
 - Nenhum atributo de áudio tem correlação de Spearman com a popularidade acima

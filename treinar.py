@@ -199,6 +199,36 @@ def figura_real_vs_previsto(y_real, y_previsto, nome):
     salvar(fig, "07_real_vs_previsto.png")
 
 
+def erro_por_faixa(y_real, y_previsto):
+    """MAE e viés (previsto - real) por faixa de popularidade real."""
+    previsto = np.clip(y_previsto, 0, 100)
+    faixas = pd.cut(y_real, [0, 20, 40, 60, 80, 100],
+                    labels=["1-20", "21-40", "41-60", "61-80", "81-100"])
+    tabela = pd.DataFrame({"faixa": faixas, "erro": previsto - y_real})
+    resumo = tabela.groupby("faixa", observed=False)["erro"].agg(
+        faixas="size", MAE=lambda e: e.abs().mean(), vies="mean")
+    return resumo.round(2)
+
+
+def figura_erro_por_faixa(resumo, nome):
+    fig, ax = plt.subplots(figsize=(7, 3.4))
+    posicoes = np.arange(len(resumo))
+    cores = [LARANJA if v < 0 else AZUL for v in resumo["vies"]]
+    ax.bar(posicoes, resumo["vies"], color=cores, width=0.6)
+    for i, (v, n) in enumerate(zip(resumo["vies"], resumo["faixas"])):
+        ax.text(i, v + (0.6 if v >= 0 else -0.6), f"{v:+.1f}\n(n={n:,})".replace(",", "."),
+                ha="center", va="bottom" if v >= 0 else "top", fontsize=7.5,
+                color=TEXTO_2)
+    ax.axhline(0, color=TEXTO_2, linewidth=0.8)
+    ax.set_xticks(posicoes, resumo.index)
+    limite = resumo["vies"].abs().max() * 1.6
+    ax.set(ylim=(-limite, limite), xlabel="popularidade real",
+           ylabel="viés médio (previsto − real)",
+           title=f"Viés por faixa de popularidade · {nome}")
+    ax.grid(axis="x", visible=False)
+    salvar(fig, "09_vies_por_faixa.png")
+
+
 def figura_importancia(importancia, nome):
     serie = importancia.sort_values("media")
     fig, ax = plt.subplots(figsize=(7, 4.4))
@@ -275,6 +305,10 @@ def main():
     previsto = melhor.predict(Xe)
     figura_comparacao(tabela)
     figura_real_vs_previsto(ye, previsto, nome_melhor)
+    erro_faixas = erro_por_faixa(ye, previsto)
+    figura_erro_por_faixa(erro_faixas, nome_melhor)
+    print("\nErro do melhor modelo por faixa de popularidade real:")
+    print(erro_faixas.to_string())
 
     print("\nImportância por permutação no teste (pode levar alguns minutos)...")
     amostra = np.random.default_rng(SEMENTE).choice(len(Xe), size=min(6000, len(Xe)),
@@ -353,7 +387,9 @@ def main():
 
     relatorio = {"avaliacao": avaliacao, "modelos": tabela,
                  "importancia_permutacao": importancia.round(4).to_dict(orient="index"),
-                 "experimentos": experimentos, "versoes": versoes,
+                 "experimentos": experimentos,
+                 "erro_por_faixa_real": erro_faixas.to_dict(orient="index"),
+                 "versoes": versoes,
                  "busca_rapida": args.rapido,
                  "tempo_total_s": round(time.time() - inicio)}
     caminho = PASTA_RESULTADOS / f"metricas{sufixo}.json"
