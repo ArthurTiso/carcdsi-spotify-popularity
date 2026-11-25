@@ -94,14 +94,90 @@ para a seção de Metodologia e de Discussão do artigo.
 - O intervalo exibido é **previsão ± MAE do teste**; os prompts deixam claro
   que não é a faixa de popularidade do gênero (a LLM confundiu os dois nos
   primeiros testes).
+- **Fatos prontos em vez de dedução.** Nos testes, a LLM errou coisas que o
+  programa sabe calcular: disse que 47,4 era "inferior" a 46,7, que a
+  tonalidade 5 era Ré (é Fá) e que −6,9 dB era "volume baixo" (é alto para o
+  dataset). Correção: `prever.py` grava frases prontas de comparação
+  (`"4.2 pontos acima da média (60.6)"`), nomes legíveis de tonalidade, modo e
+  compasso, e as descrições dos atributos trazem a mediana do dataset. Regra
+  geral adotada: **o programa calcula; a LLM só redige**.
+- **Números arredondados e temperatura 0.** O JSON enviado à LLM leva os números
+  com 1 casa (atributos de áudio com 3), e as chamadas usam temperatura 0.
+- **Limpeza de LaTeX no código.** Mesmo instruído, o modelo escrevia `$\pm$`
+  em boa parte das respostas; `limpar_texto()` converte para texto simples.
 
 ## Nota para a discussão (artigo) · R² esperado é baixo
 
 - Nenhum atributo de áudio tem correlação de Spearman com a popularidade acima
   de |0,20| (o maior é `instrumentalness`, −0,197).
-- Só o gênero explica **R² ≈ 0,44** (prever a média do gênero), ou seja, a maior
+- Só o gênero explica **R² ≈ 0,44** no dataset todo (0,42 no teste) ao prever a média do gênero; a maior
   parte do que dá para prever vem do gênero.
 - A popularidade depende de fatores que **não estão no dataset**: artista,
   gravadora, marketing, playlists editoriais, data de lançamento, viralização.
 - Portanto, um R² moderado não é falha de modelagem: é um limite do problema
   com estes dados, e deve ser discutido como tal.
+
+## Resultados finais (treinar.py, execução completa)
+
+Teste: 16.066 faixas; treino: 64.327. Tempo total: ~19 min em 4 núcleos.
+
+| Modelo | RMSE CV | MAE | MSE | RMSE | R² | Hiperparâmetros escolhidos |
+|---|---:|---:|---:|---:|---:|---|
+| Dummy (média) | 18,16 | 15,09 | 327,5 | 18,10 | 0,000 | — |
+| Média do gênero | 13,59 | 9,85 | 188,9 | 13,75 | 0,423 | — |
+| Ridge | 13,52 | 9,79 | 187,0 | 13,68 | 0,429 | α = 1 |
+| Random Forest | 13,99 | 10,42 | 197,9 | 14,07 | 0,396 | max_depth 30, min_samples_leaf 10, max_features 0,33 |
+| **HistGradientBoosting** | **13,17** | **9,31** | **176,9** | **13,30** | **0,460** | learning_rate 0,03, max_iter 600, max_leaf_nodes 63, min_samples_leaf 20, l2 1,0 |
+
+Leituras para a discussão:
+
+1. **Ranking igual na validação cruzada e no teste.** A escolha pelo RMSE da
+   validação cruzada coincide com o melhor no teste, sinal de que a avaliação
+   é estável.
+2. **Random Forest ficou abaixo do Ridge.** Com 114 colunas one-hot de gênero,
+   a floresta sorteia poucas colunas de gênero por divisão e aprende pior o
+   efeito do gênero; o boosting, que corrige erros em sequência, aproveita melhor.
+3. **Ganho do áudio sobre o gênero é pequeno:** R² 0,423 → 0,460 (+0,037);
+   MAE 9,85 → 9,31.
+4. **Importância por permutação** (aumento do RMSE, pontos): gênero 6,82;
+   instrumentalness 0,32; energy 0,23; loudness 0,18; duração 0,16; demais
+   < 0,10; key, mode e time_signature ≈ 0.
+5. **Viés por faixa de popularidade real** (previsto − real): 1–20: +11,4;
+   21–40: +4,7; 41–60: −6,0; 61–80: −16,9; 81–100: −32,6. O modelo encolhe as
+   previsões em direção à média; não identifica hits.
+6. **Experimentos:**
+   - com popularidade zero: R² 0,354, MAE 11,72 (conjunto de teste diferente,
+     com zeros; o modelo tenta prever um valor que é artefato da coleta);
+   - divisão aleatória (sem agrupar): R² 0,477, MAE 9,18, com 1.216 faixas do
+     teste tendo outra versão da mesma música no treino. O ganho (+0,017) é
+     otimismo causado pelo vazamento, não melhora real.
+
+## Avaliação da LLM (avaliar_llm.py)
+
+`avaliar_llm.py` gera relatos com a LLM (`nvidia/nemotron-3.5-bolt-e4b`) e
+confere automaticamente se cada número citado existe no JSON enviado a ela
+(aceitando arredondamento e as diferenças previsão − médias). Rodada final:
+30 relatos por configuração, alternando cinco músicas (pop da `ficha.json` e
+fichas típicas de samba, metal, classical e k-pop) — `resultados/avaliacao_llm.json`.
+
+| Configuração | Número fora do JSON | Resposta com LaTeX | Tempo médio |
+|---|---:|---:|---:|
+| prompt original (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 0/30 | 3,0 s |
+| prompt revisado (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 6/30 | 3,5 s |
+| **final** (prompt revisado + números arredondados + temperatura 0 + limpeza) | **0/30** | **0/30** | 3,3 s |
+
+Leitura honesta dos resultados:
+
+- Nesta amostra, **nenhuma configuração citou número inexistente**. Os erros de
+  cópia vistos nos testes iniciais (ex.: "65,8" para uma previsão de 64,8, em
+  3 de 8 respostas) foram **intermitentes**; as salvaguardas (arredondar,
+  temperatura 0, instrução explícita) são baratas e foram mantidas, mas esta
+  avaliação não mostra diferença estatística entre as configurações nesse item.
+- O **LaTeX** aparece de forma irregular sem a limpeza (0 a 6 de 30 por rodada;
+  6 de 12 numa rodada preliminar) e **some com `limpar_texto()`**.
+- O verificador automático só confere números. Os **erros de raciocínio**
+  ("47,4 é inferior a 46,7", "tonalidade 5 = Ré") foram tratados por
+  construção — o programa entrega as comparações e os nomes prontos — e
+  conferidos manualmente no terminal e na interface.
+- Limitação: uma única LLM e um único tipo de pergunta (o relato inicial);
+  as respostas do chat e do assistente foram verificadas só manualmente.

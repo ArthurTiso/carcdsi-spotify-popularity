@@ -1,0 +1,146 @@
+{
+  "versao": 1,
+  "atributos": {
+    "danceability": 0.72,
+    "energy": 0.68,
+    "loudness": -5.5,
+    "speechiness": 0.05,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0,
+    "liveness": 0.12,
+    "valence": 0.55,
+    "tempo": 118.0,
+    "duracao_min": 3.3,
+    "explicit": 0,
+    "mode": 1,
+    "key": 5,
+    "time_signature": 4,
+    "track_genre": "pop"
+  },
+  "atributos_legiveis": {
+    "tonalidade": "Fá",
+    "modo": "maior",
+    "compasso": "4/4",
+    "conteudo_explicito": "não"
+  },
+  "descricao_atributos": {
+    "danceability": "adequação para dança (0 a 1)",
+    "energy": "energia/intensidade (0 a 1)",
+    "loudness": "volume médio em dB (de -60 a 0; quanto mais perto de 0, mais alto; no dataset: mediana -7,2 dB, 90% das faixas abaixo de -3,7 dB)",
+    "speechiness": "presença de fala (0 a 1)",
+    "acousticness": "chance de ser acústica (0 a 1)",
+    "instrumentalness": "chance de ser instrumental (0 a 1)",
+    "liveness": "presença de plateia/ao vivo (0 a 1)",
+    "valence": "positividade/alegria (0 a 1)",
+    "tempo": "andamento em BPM (mediana do dataset: 123)",
+    "duracao_min": "duração em minutos (mediana do dataset: 3,6)",
+    "explicit": "conteúdo explícito (0 = não, 1 = sim)",
+    "mode": "modo (0 = menor, 1 = maior)",
+    "key": "tonalidade (0 Dó, 1 Dó♯, 2 Ré, 3 Ré♯, 4 Mi, 5 Fá, 6 Fá♯, 7 Sol, 8 Sol♯, 9 Lá, 10 Lá♯, 11 Si)",
+    "time_signature": "fórmula de compasso estimada (3 a 7)",
+    "track_genre": "gênero musical"
+  },
+  "previsao": {
+    "popularidade_prevista": 64.82,
+    "escala": "0 a 100 (índice de popularidade do Spotify)",
+    "erro_medio_absoluto_no_teste": 9.306,
+    "intervalo_da_previsao": [
+      55.5,
+      74.1
+    ],
+    "intervalo_da_previsao_significa": "previsão ± erro médio absoluto do modelo no teste (não é a faixa de popularidade do gênero)",
+    "modelo": "HistGradientBoosting"
+  },
+  "contexto_treino": {
+    "popularidade_media_geral": 37.08,
+    "popularidade_media_do_genero": 60.65,
+    "previsao_comparada_a_media_do_genero": "4.2 pontos acima da média (60.6)",
+    "previsao_comparada_a_media_geral": "27.7 pontos acima da média (37.1)",
+    "faixas_do_genero_no_treino": 375,
+    "posicao_do_genero": "1º de 114 gêneros por popularidade média"
+  },
+  "explicacao_shap": {
+    "saida_explicada": "popularidade prevista (antes de limitar a 0..100)",
+    "metodo": "shap.TreeExplainer; one-hot somado por atributo original",
+    "valor_base": 37.081,
+    "contribuicoes_por_atributo": {
+      "track_genre": 19.423,
+      "instrumentalness": 3.109,
+      "key": -2.265,
+      "energy": 1.544,
+      "loudness": 1.485,
+      "danceability": 1.256,
+      "tempo": 0.924,
+      "duracao_min": 0.904,
+      "speechiness": 0.583,
+      "liveness": 0.56,
+      "acousticness": 0.388,
+      "explicit": -0.226,
+      "valence": 0.179,
+      "mode": -0.136,
+      "time_signature": 0.006
+    },
+    "soma_reconstruida": 64.816
+  },
+  "importancia_global_permutacao": {
+    "danceability": 0.0957,
+    "energy": 0.2339,
+    "loudness": 0.1839,
+    "speechiness": 0.0882,
+    "acousticness": 0.0847,
+    "instrumentalness": 0.3177,
+    "liveness": 0.0337,
+    "valence": 0.0873,
+    "tempo": 0.0303,
+    "duracao_min": 0.1615,
+    "explicit": 0.06,
+    "mode": -0.015,
+    "key": 0.0027,
+    "time_signature": 0.0176,
+    "track_genre": 6.8184
+  },
+  "avaliacao_teste": {
+    "modelo": "HistGradientBoosting",
+    "teste": {
+      "MAE": 9.306,
+      "MSE": 176.891,
+      "RMSE": 13.3,
+      "R2": 0.4599
+    },
+    "referencia_dummy": {
+      "MAE": 15.086,
+      "MSE": 327.544,
+      "RMSE": 18.098,
+      "R2": -0.0
+    },
+    "referencia_media_genero": {
+      "MAE": 9.845,
+      "MSE": 188.919,
+      "RMSE": 13.745,
+      "R2": 0.4232
+    },
+    "n_treino": 64327,
+    "n_teste": 16066,
+    "divisao": "80/20 GroupShuffleSplit por musica_id, random_state=42",
+    "validacao_cruzada": "GroupKFold 5 folds no treino, métrica RMSE",
+    "popularidade_zero": "removida (alvo ausente)"
+  },
+  "origem": {
+    "nome": "Spotify Tracks Dataset",
+    "fonte": "https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset",
+    "autor": "Maharshi Pandya (Kaggle)",
+    "linhas_originais": 114000,
+    "linhas_apos_limpeza": 89740
+  },
+  "versoes": {
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1",
+    "shap": "0.54.1"
+  },
+  "limites": [
+    "a previsão é uma estimativa do modelo, não uma garantia de sucesso",
+    "SHAP descreve como ESTE modelo chegou ao número; não prova causa",
+    "popularidade depende de fatores ausentes nos dados: artista, marketing, playlists, data de lançamento, viralização",
+    "o modelo foi treinado com faixas do Spotify coletadas em 2022 (dataset do Kaggle)"
+  ]
+}

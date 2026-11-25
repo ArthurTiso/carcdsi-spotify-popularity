@@ -38,17 +38,19 @@ ATRIBUTOS = NUMERICAS + BINARIAS + CATEGORICAS
 DESCRICOES = {
     "danceability": "adequação para dança (0 a 1)",
     "energy": "energia/intensidade (0 a 1)",
-    "loudness": "volume médio em dB (tipicamente -60 a 0)",
+    "loudness": "volume médio em dB (de -60 a 0; quanto mais perto de 0, mais alto; "
+                "no dataset: mediana -7,2 dB, 90% das faixas abaixo de -3,7 dB)",
     "speechiness": "presença de fala (0 a 1)",
     "acousticness": "chance de ser acústica (0 a 1)",
     "instrumentalness": "chance de ser instrumental (0 a 1)",
     "liveness": "presença de plateia/ao vivo (0 a 1)",
     "valence": "positividade/alegria (0 a 1)",
-    "tempo": "andamento em BPM",
-    "duracao_min": "duração em minutos",
+    "tempo": "andamento em BPM (mediana do dataset: 123)",
+    "duracao_min": "duração em minutos (mediana do dataset: 3,6)",
     "explicit": "conteúdo explícito (0 = não, 1 = sim)",
     "mode": "modo (0 = menor, 1 = maior)",
-    "key": "tonalidade (0 = Dó, 1 = Dó#, ..., 11 = Si)",
+    "key": "tonalidade (0 Dó, 1 Dó♯, 2 Ré, 3 Ré♯, 4 Mi, 5 Fá, 6 Fá♯, 7 Sol, "
+           "8 Sol♯, 9 Lá, 10 Lá♯, 11 Si)",
     "time_signature": "fórmula de compasso estimada (3 a 7)",
     "track_genre": "gênero musical",
 }

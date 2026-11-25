@@ -23,7 +23,7 @@ import pandas as pd
 import shap
 import sklearn
 
-from config import (ARQUIVO_MODELO, ATRIBUTOS, BINARIAS, NUMERICAS, PASTA,
+from config import (ARQUIVO_MODELO, ATRIBUTOS, BINARIAS, DESCRICOES, NUMERICAS, PASTA,
                     PASTA_RESULTADOS)
 
 # Limites de domínio de cada atributo numérico (definição do Spotify).
@@ -143,6 +143,19 @@ def contribuicoes_por_atributo(preparo, valores):
     return contrib
 
 
+TONS = ["Dó", "Dó♯/Ré♭", "Ré", "Ré♯/Mi♭", "Mi", "Fá", "Fá♯/Sol♭", "Sol",
+        "Sol♯/Lá♭", "Lá", "Lá♯/Si♭", "Si"]
+
+
+def comparar(previsao, referencia):
+    """Frase pronta com a diferença: evita a LLM errar 'acima/abaixo'."""
+    diferenca = round(previsao - referencia, 1)
+    if diferenca == 0:
+        return f"igual à média ({referencia:.1f})"
+    lado = "acima" if diferenca > 0 else "abaixo"
+    return f"{abs(diferenca):.1f} pontos {lado} da média ({referencia:.1f})"
+
+
 def prever(ficha, artefato):
     """Previsão + explicação SHAP de uma ficha já validada."""
     modelo = artefato["modelo"]
@@ -167,10 +180,19 @@ def prever(ficha, artefato):
     ranking = sorted(generos, key=lambda g: -generos[g]["media"])
     genero = ficha["track_genre"]
     avaliacao = artefato["avaliacao"]
+    media_genero = generos[genero]["media"]
+    media_geral = contexto["popularidade_media"]
     return {
         "versao": 1,
         "atributos": ficha,
-        "descricao_atributos": artefato["descricoes"],
+        # Fatos já calculados pelo programa: a LLM só repete, não deduz.
+        "atributos_legiveis": {
+            "tonalidade": TONS[ficha["key"]],
+            "modo": "maior" if ficha["mode"] == 1 else "menor",
+            "compasso": f"{ficha['time_signature']}/4",
+            "conteudo_explicito": "sim" if ficha["explicit"] == 1 else "não",
+        },
+        "descricao_atributos": DESCRICOES,
         "previsao": {
             "popularidade_prevista": round(popularidade, 2),
             "escala": "0 a 100 (índice de popularidade do Spotify)",
@@ -183,10 +205,13 @@ def prever(ficha, artefato):
             "modelo": artefato["nome"],
         },
         "contexto_treino": {
-            "popularidade_media_geral": contexto["popularidade_media"],
-            "popularidade_media_do_genero": generos[genero]["media"],
+            "popularidade_media_geral": media_geral,
+            "popularidade_media_do_genero": media_genero,
+            "previsao_comparada_a_media_do_genero": comparar(popularidade, media_genero),
+            "previsao_comparada_a_media_geral": comparar(popularidade, media_geral),
             "faixas_do_genero_no_treino": generos[genero]["faixas"],
-            "posicao_do_genero": f"{ranking.index(genero) + 1}º de {len(ranking)} gêneros",
+            "posicao_do_genero": f"{ranking.index(genero) + 1}º de {len(ranking)} gêneros "
+                                 "por popularidade média",
         },
         "explicacao_shap": {
             "saida_explicada": "popularidade prevista (antes de limitar a 0..100)",

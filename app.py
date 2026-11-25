@@ -19,12 +19,10 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 import processar
-from config import PASTA_FIGURAS, PASTA_RESULTADOS
+from config import DESCRICOES, PASTA_FIGURAS, PASTA_RESULTADOS
 from explorar import AZUL, TEXTO_2, VERMELHO
-from prever import carregar_artefato, completar_ficha, prever, validar_ficha
+from prever import TONS, carregar_artefato, completar_ficha, prever, validar_ficha
 
-TONS = ["Dó", "Dó♯/Ré♭", "Ré", "Ré♯/Mi♭", "Mi", "Fá", "Fá♯/Sol♭", "Sol",
-        "Sol♯/Lá♭", "Lá", "Lá♯/Si♭", "Si"]
 CONTROLES = {  # campo: (rótulo, mínimo, máximo, passo)
     "danceability": ("Dançabilidade", 0.0, 1.0, 0.01),
     "energy": ("Energia", 0.0, 1.0, 0.01),
@@ -126,7 +124,7 @@ def aba_formulario(artefato):
     for i, (campo, (rotulo, minimo, maximo, passo)) in enumerate(CONTROLES.items()):
         ficha[campo] = colunas[i % 2].slider(rotulo, minimo, maximo, step=passo,
                                              key=f"f_{campo}",
-                                             help=artefato["descricoes"][campo])
+                                             help=DESCRICOES[campo])
     c1, c2, c3, c4 = st.columns(4)
     ficha["explicit"] = int(c1.toggle("Conteúdo explícito", key="f_explicit"))
     ficha["mode"] = int(c2.toggle("Modo maior", key="f_mode"))
@@ -166,6 +164,7 @@ def aba_formulario(artefato):
                 return
         mensagens.append({"role": "assistant", "content": resposta})
         st.session_state.chat_form = mensagens
+        st.rerun()  # redesenha sem o botão, já com a explicação
     mensagens = st.session_state.get("chat_form")
     if not mensagens:
         return
@@ -224,8 +223,11 @@ def aba_sobre(artefato):
     caminho = PASTA_RESULTADOS / "metricas.json"
     if caminho.exists():
         metricas = json.loads(caminho.read_text(encoding="utf-8"))
-        tabela = {nome: {"RMSE (validação cruzada)": m["cv_rmse"], **m["teste"]}
+        tabela = {nome: {"RMSE (validação cruzada)": m["cv_rmse"],
+                         "MAE": m["teste"]["MAE"], "MSE": m["teste"]["MSE"],
+                         "RMSE": m["teste"]["RMSE"], "R²": m["teste"]["R2"]}
                   for nome, m in metricas["modelos"].items()}
+        st.caption("Métricas no conjunto de teste; RMSE da validação cruzada no treino.")
         st.dataframe(tabela, width="stretch")
     for figura in sorted(PASTA_FIGURAS.glob("*.png")):
         st.image(str(figura), caption=figura.stem.replace("_", " "), width=700)

@@ -2,10 +2,10 @@
   "avaliacao": {
     "modelo": "HistGradientBoosting",
     "teste": {
-      "MAE": 9.241,
-      "MSE": 177.259,
-      "RMSE": 13.314,
-      "R2": 0.4588
+      "MAE": 9.306,
+      "MSE": 176.891,
+      "RMSE": 13.3,
+      "R2": 0.4599
     },
     "referencia_dummy": {
       "MAE": 15.086,
@@ -59,129 +59,156 @@
       }
     },
     "Random Forest": {
-      "cv_rmse": 14.041,
+      "cv_rmse": 13.987,
       "hiperparametros": {
-        "min_samples_leaf": 20,
-        "max_features": 0.5,
+        "min_samples_leaf": 10,
+        "max_features": 0.33,
         "max_depth": 30
       },
       "teste": {
-        "MAE": 10.424,
-        "MSE": 199.303,
-        "RMSE": 14.117,
-        "R2": 0.3915
+        "MAE": 10.422,
+        "MSE": 197.89,
+        "RMSE": 14.067,
+        "R2": 0.3958
       }
     },
     "HistGradientBoosting": {
-      "cv_rmse": 13.176,
+      "cv_rmse": 13.172,
       "hiperparametros": {
         "min_samples_leaf": 20,
         "max_leaf_nodes": 63,
         "max_iter": 600,
-        "learning_rate": 0.05,
-        "l2_regularization": 10.0
+        "learning_rate": 0.03,
+        "l2_regularization": 1.0
       },
       "teste": {
-        "MAE": 9.241,
-        "MSE": 177.259,
-        "RMSE": 13.314,
-        "R2": 0.4588
+        "MAE": 9.306,
+        "MSE": 176.891,
+        "RMSE": 13.3,
+        "R2": 0.4599
       }
     }
   },
   "importancia_permutacao": {
     "danceability": {
-      "media": 0.0959,
-      "desvio": 0.0172
+      "media": 0.0957,
+      "desvio": 0.0241
     },
     "energy": {
-      "media": 0.2584,
-      "desvio": 0.0369
+      "media": 0.2339,
+      "desvio": 0.0325
     },
     "loudness": {
-      "media": 0.2339,
-      "desvio": 0.0199
+      "media": 0.1839,
+      "desvio": 0.0264
     },
     "speechiness": {
-      "media": 0.1099,
-      "desvio": 0.0167
+      "media": 0.0882,
+      "desvio": 0.0173
     },
     "acousticness": {
-      "media": 0.091,
-      "desvio": 0.0186
+      "media": 0.0847,
+      "desvio": 0.0161
     },
     "instrumentalness": {
-      "media": 0.3073,
-      "desvio": 0.0444
+      "media": 0.3177,
+      "desvio": 0.048
     },
     "liveness": {
-      "media": 0.0289,
-      "desvio": 0.0085
+      "media": 0.0337,
+      "desvio": 0.0086
     },
     "valence": {
-      "media": 0.0953,
-      "desvio": 0.0176
+      "media": 0.0873,
+      "desvio": 0.0134
     },
     "tempo": {
-      "media": 0.0437,
-      "desvio": 0.0202
+      "media": 0.0303,
+      "desvio": 0.0158
     },
     "duracao_min": {
-      "media": 0.1749,
-      "desvio": 0.0237
+      "media": 0.1615,
+      "desvio": 0.0259
     },
     "explicit": {
-      "media": 0.0606,
-      "desvio": 0.0084
+      "media": 0.06,
+      "desvio": 0.0072
     },
     "mode": {
-      "media": -0.0187,
-      "desvio": 0.0057
+      "media": -0.015,
+      "desvio": 0.0055
     },
     "key": {
-      "media": 0.0105,
-      "desvio": 0.0133
+      "media": 0.0027,
+      "desvio": 0.0126
     },
     "time_signature": {
-      "media": 0.0099,
-      "desvio": 0.004
+      "media": 0.0176,
+      "desvio": 0.0031
     },
     "track_genre": {
-      "media": 6.9341,
-      "desvio": 0.1096
+      "media": 6.8184,
+      "desvio": 0.1056
     }
   },
   "experimentos": {
     "principal (agrupada, sem zeros)": {
-      "MAE": 9.241,
-      "MSE": 177.259,
-      "RMSE": 13.314,
-      "R2": 0.4588,
+      "MAE": 9.306,
+      "MSE": 176.891,
+      "RMSE": 13.3,
+      "R2": 0.4599,
       "faixas_teste_com_mesma_musica_no_treino": 0
     },
     "com zeros (agrupada)": {
-      "MAE": 11.648,
-      "MSE": 275.274,
-      "RMSE": 16.591,
-      "R2": 0.353,
+      "MAE": 11.718,
+      "MSE": 274.94,
+      "RMSE": 16.581,
+      "R2": 0.3538,
       "n_treino": 71730,
       "n_teste": 18010,
       "faixas_teste_com_mesma_musica_no_treino": 0
     },
     "divisao aleatoria (sem zeros)": {
-      "MAE": 9.115,
-      "MSE": 169.522,
-      "RMSE": 13.02,
-      "R2": 0.4787,
+      "MAE": 9.177,
+      "MSE": 170.012,
+      "RMSE": 13.039,
+      "R2": 0.4772,
       "n_treino": 64314,
       "n_teste": 16079,
       "faixas_teste_com_mesma_musica_no_treino": 1216
+    }
+  },
+  "erro_por_faixa_real": {
+    "1-20": {
+      "faixas": 3118,
+      "MAE": 11.82,
+      "vies": 11.42
+    },
+    "21-40": {
+      "faixas": 6059,
+      "MAE": 6.84,
+      "vies": 4.69
+    },
+    "41-60": {
+      "faixas": 5127,
+      "MAE": 7.73,
+      "vies": -5.96
+    },
+    "61-80": {
+      "faixas": 1659,
+      "MAE": 17.02,
+      "vies": -16.86
+    },
+    "81-100": {
+      "faixas": 103,
+      "MAE": 32.58,
+      "vies": -32.58
     }
   },
   "versoes": {
     "pandas": "3.1.0",
     "sklearn": "1.9.1"
   },
-  "busca_rapida": true,
-  "tempo_total_s": 553
+  "busca_rapida": false,
+  "tempo_total_s": 1131
 }

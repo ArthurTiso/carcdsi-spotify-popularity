@@ -172,7 +172,9 @@ def figura_comparacao(tabela):
     fig, eixos = plt.subplots(1, 2, figsize=(9, 3.4), sharey=True)
     for ax, chave, titulo in [(eixos[0], "RMSE", "RMSE no teste (menor é melhor)"),
                               (eixos[1], "R2", "R² no teste (maior é melhor)")]:
-        valores = [tabela[n]["teste"][chave] for n in nomes]
+        # abs() evita exibir "-0.000" quando o valor arredondado é zero
+        valores = [v if abs(v) >= 5e-4 else 0.0
+                   for v in (tabela[n]["teste"][chave] for n in nomes)]
         melhor = (np.argmin if chave == "RMSE" else np.argmax)(valores)
         cores = [LARANJA if i == melhor else AZUL for i in range(len(nomes))]
         ax.barh(nomes, valores, color=cores, height=0.65)
