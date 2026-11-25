@@ -23,7 +23,7 @@ SEMENTE = 42
 
 # Variável-alvo e coluna de agrupamento (mesma música => mesmo conjunto)
 ALVO = "popularity"
-GRUPO = "musica_id"
+GRUPO = "grupo_id"  # mesma música ou mesmo áudio (ver preparar.py)
 
 # Atributos de entrada
 NUMERICAS = [

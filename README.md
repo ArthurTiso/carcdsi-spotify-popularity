@@ -38,7 +38,8 @@ dataset.csv ─► preparar.py ─► explorar.py ─► treinar.py ─► preve
 | `config.py` | caminhos, colunas e semente compartilhados | — |
 
 Decisões de metodologia (com justificativa e números) estão em
-[`docs/decisoes.md`](docs/decisoes.md).
+[`docs/decisoes.md`](docs/decisoes.md); a descrição de cada coluna, original
+ou criada, está em [`docs/dicionario_dados.md`](docs/dicionario_dados.md).
 
 ### Resultados
 
@@ -148,14 +149,19 @@ Observações:
 ├── .streamlit/config.toml   # aparência da interface
 └── docs/
     ├── decisoes.md          # decisões de metodologia
+    ├── dicionario_dados.md  # colunas originais e criadas
     └── imagens/             # telas da interface
 ```
 
 ### Dados
 
 Spotify Tracks Dataset, de Maharshi Pandya, disponível no
-[Kaggle](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset):
-114.000 linhas, 114 gêneros, atributos de áudio da API do Spotify.
+[Kaggle](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
+e no [Hugging Face](https://huggingface.co/datasets/maharshipandya/spotify-tracks-dataset):
+114.000 linhas, 114 gêneros (1.000 faixas cada), atributos de áudio da API do
+Spotify, coletados em 2022. Licença indicada no cartão do Hugging Face: BSD.
+O CSV original está incluído para facilitar a replicação, com crédito ao autor.
+Dicionário completo: [`docs/dicionario_dados.md`](docs/dicionario_dados.md).
 
 ---
 
@@ -234,4 +240,7 @@ On Windows, use `.\.venv\Scripts\python.exe` instead of `.venv/bin/python` and
 ### Data
 
 Spotify Tracks Dataset by Maharshi Pandya,
-[Kaggle](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset).
+[Kaggle](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) /
+[Hugging Face](https://huggingface.co/datasets/maharshipandya/spotify-tracks-dataset)
+(BSD license per the dataset card). The raw CSV is included, with credit to the
+author. Column dictionary (Portuguese): [`docs/dicionario_dados.md`](docs/dicionario_dados.md).

@@ -24,6 +24,14 @@ para a seção de Metodologia e de Discussão do artigo.
   divisão treino/teste e na validação cruzada (`GroupShuffleSplit` / `GroupKFold`).
 - **Por quê:** sem isso, o modelo "decora" a música no treino e acerta a outra
   versão no teste, inflando as métricas (vazamento de dados).
+- **Revisão (grupo_id):** uma auditoria depois do primeiro treino achou 119
+  faixas do teste (0,7%) com **áudio idêntico** a faixas do treino, publicadas
+  com outro título — "Left and Right (Feat. Jung Kook of BTS)" × "Left and
+  Right", "Der Fluss" × "El río" — que `musica_id` não unia. Agora o grupo
+  (`grupo_id`) une, por *union-find*, faixas com o mesmo `musica_id` **ou** os
+  mesmos atributos de áudio: 81.206 músicas → 80.810 grupos (366 uniões; o maior
+  grupo continua com 45 faixas da mesma música). Os pares encontrados também
+  mostram ruído no alvo: a mesma gravação aparece com popularidade 75 e 1.
 
 ## D3 · Popularidade zero (preparar.py / treinar.py)
 

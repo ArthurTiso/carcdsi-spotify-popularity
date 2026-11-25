@@ -247,22 +247,90 @@ def figura_importancia(importancia, nome):
 
 
 # --------------------------------------------------------------- experimentos
-def experimento(dados, modelo_base, agrupar):
-    """Retreina o melhor pipeline (mesmos hiperparâmetros) em outro cenário."""
+def experimento(dados, modelo_base, agrupar=GRUPO, semente=SEMENTE):
+    """Retreina o melhor pipeline (mesmos hiperparâmetros) em outro cenário.
+
+    agrupar: coluna de grupo da divisão 80/20 (GRUPO, "artista_principal")
+    ou None para divisão aleatória. semente: sorteio da divisão.
+    """
     X, y = dados[ATRIBUTOS], dados[ALVO].to_numpy()
     if agrupar:
         treino, teste = next(GroupShuffleSplit(
-            n_splits=1, test_size=0.2, random_state=SEMENTE).split(
-                X, y, dados[GRUPO]))
+            n_splits=1, test_size=0.2, random_state=semente).split(
+                X, y, dados[agrupar]))
     else:
         treino, teste = train_test_split(np.arange(len(dados)), test_size=0.2,
-                                         random_state=SEMENTE)
+                                         random_state=semente)
     modelo = clone(modelo_base).fit(X.iloc[treino], y[treino])
     musicas_treino = set(dados[GRUPO].iloc[treino])
     vazadas = int(dados[GRUPO].iloc[teste].isin(musicas_treino).sum())
+    artistas_treino = set(dados["artista_principal"].iloc[treino])
+    artista_conhecido = dados["artista_principal"].iloc[teste].isin(artistas_treino)
     return {**metricas(y[teste], modelo.predict(X.iloc[teste])),
             "n_treino": len(treino), "n_teste": len(teste),
-            "faixas_teste_com_mesma_musica_no_treino": vazadas}
+            "faixas_teste_com_mesma_musica_no_treino": vazadas,
+            "faixas_teste_com_artista_no_treino": round(float(artista_conhecido.mean()), 3)}
+
+
+SEMENTES_DIVISAO = (42, 1, 2, 3, 4)  # a primeira é a divisão principal
+
+
+def experimentos_repetidos(todos, modelo_base, sementes=SEMENTES_DIVISAO):
+    """Cada cenário em várias divisões 80/20 (as mesmas sementes para todos).
+
+    Com uma divisão só, trocar as músicas do teste já move o R² em ~0,01, que é
+    do tamanho das diferenças comparadas. Por isso cada cenário é repetido e
+    as diferenças são calculadas par a par (mesma semente).
+    """
+    sem_zeros = todos[todos["popularidade_zero"] == 0].reset_index(drop=True)
+    cenarios = {
+        "agrupada por musica, sem zeros (protocolo principal)": (sem_zeros, GRUPO),
+        "agrupada por musica, com zeros": (todos, GRUPO),
+        "divisao aleatoria, sem zeros": (sem_zeros, None),
+        "agrupada por artista principal, sem zeros": (sem_zeros, "artista_principal"),
+    }
+    saida = {}
+    for nome, (dados, agrupar) in cenarios.items():
+        rodadas = [experimento(dados, modelo_base, agrupar, s) for s in sementes]
+        r2 = np.array([r["R2"] for r in rodadas])
+        mae = np.array([r["MAE"] for r in rodadas])
+        saida[nome] = {
+            "R2_media": round(float(r2.mean()), 4), "R2_desvio": round(float(r2.std()), 4),
+            "MAE_media": round(float(mae.mean()), 3), "MAE_desvio": round(float(mae.std()), 3),
+            "R2_por_divisao": r2.round(4).tolist(),
+            "faixas_teste_com_mesma_musica_no_treino_media": round(float(np.mean(
+                [r["faixas_teste_com_mesma_musica_no_treino"] for r in rodadas])), 1),
+            "faixas_teste_com_artista_no_treino_media": round(float(np.mean(
+                [r["faixas_teste_com_artista_no_treino"] for r in rodadas])), 3),
+        }
+        print(f"  {nome:<52} R² = {r2.mean():.4f} ± {r2.std():.4f} | "
+              f"MAE = {mae.mean():.3f} ± {mae.std():.3f}")
+    base = np.array(saida["agrupada por musica, sem zeros (protocolo principal)"]["R2_por_divisao"])
+    for nome in ["divisao aleatoria, sem zeros", "agrupada por artista principal, sem zeros"]:
+        dif = np.array(saida[nome]["R2_por_divisao"]) - base
+        saida[nome]["diferenca_R2_vs_principal_por_divisao"] = dif.round(4).tolist()
+        saida[nome]["diferenca_R2_vs_principal_media"] = round(float(dif.mean()), 4)
+        saida[nome]["diferenca_R2_vs_principal_desvio"] = round(float(dif.std()), 4)
+        print(f"  diferença de R² ({nome} − principal): {dif.mean():+.4f} ± {dif.std():.4f} "
+              f"(positiva em {int((dif > 0).sum())} de {len(dif)} divisões)")
+    return {"sementes_divisao": list(sementes), "cenarios": saida}
+
+
+def sensibilidade_genero(modelo_base, sementes=(1, 2, 3)):
+    """Refaz o sorteio do gênero (faixas em vários gêneros) com outras sementes."""
+    from preparar import preparar
+    resultados = []
+    for semente in sementes:
+        dados, _ = preparar(semente=semente, mostrar=False)
+        dados = dados[dados["popularidade_zero"] == 0].reset_index(drop=True)
+        # Em memória o compasso é Int64 (pd.NA); no CSV lido ele é float (NaN).
+        dados["time_signature"] = dados["time_signature"].astype("float64")
+        resultados.append(experimento(dados, modelo_base))
+    r2 = [r["R2"] for r in resultados]
+    mae = [r["MAE"] for r in resultados]
+    return {"sementes": list(sementes), "R2_por_semente": r2, "MAE_por_semente": mae,
+            "R2_media": round(float(np.mean(r2)), 4), "R2_desvio": round(float(np.std(r2)), 4),
+            "MAE_media": round(float(np.mean(mae)), 3)}
 
 
 # ---------------------------------------------------------------------- main
@@ -326,14 +394,19 @@ def main():
     print("\nExperimentos com os hiperparâmetros escolhidos:")
     experimentos = {
         "principal (agrupada, sem zeros)" if not args.com_zeros
-        else "principal (agrupada, com zeros)": {**tabela[nome_melhor]["teste"],
-                                                  "faixas_teste_com_mesma_musica_no_treino": 0},
-        "com zeros (agrupada)": experimento(todos, melhor, agrupar=True),
-        "divisao aleatoria (sem zeros)": experimento(
-            todos[todos["popularidade_zero"] == 0].reset_index(drop=True),
-            melhor, agrupar=False),
+        else "principal (agrupada, com zeros)": {
+            **tabela[nome_melhor]["teste"], "n_treino": len(Xt), "n_teste": len(Xe),
+            "faixas_teste_com_mesma_musica_no_treino": 0,
+            "faixas_teste_com_artista_no_treino": round(float(
+                dados["artista_principal"].iloc[teste]
+                .isin(set(dados["artista_principal"].iloc[treino])).mean()), 3)},
     }
-    print(pd.DataFrame(experimentos).T.to_string())
+    print(f"\nCenários repetidos em {len(SEMENTES_DIVISAO)} divisões "
+          "(pode levar alguns minutos):")
+    experimentos["cenarios_em_varias_divisoes"] = experimentos_repetidos(todos, melhor)
+    print("\nSensibilidade ao sorteio do gênero (sementes 1, 2 e 3)...")
+    experimentos["sorteio do genero com outras sementes"] = sensibilidade_genero(melhor)
+    print(experimentos["sorteio do genero com outras sementes"])
 
     # Faixas válidas para a interface/validação da ficha (vindas do treino).
     intervalos = {c: {"min": float(Xt[c].min()), "max": float(Xt[c].max()),

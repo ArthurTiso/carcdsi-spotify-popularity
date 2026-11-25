@@ -14,8 +14,11 @@ Decisões de limpeza (justificadas em docs/decisoes.md):
   5. tempo = 0 e time_signature 0/1 são estimativas inválidas -> ausentes
      (preenchidos depois, dentro do pipeline de treino).
   6. Cria duracao_min, converte explicit para 0/1 e cria musica_id
-     (artista + nome normalizados), usado para agrupar versões da mesma
-     música na divisão treino/teste.
+     (artista + nome normalizados) e grupo_id, que une as versões da mesma
+     música (mesmo musica_id) E as gravações com áudio idêntico publicadas
+     com outro título ("feat.", "From ...", tradução). grupo_id é usado para
+     manter a mesma música inteira no treino ou no teste. Cria também
+     artista_principal (primeiro artista), usado em um experimento.
   7. Marca popularidade zero (popularidade_zero = 1). Essas faixas NÃO são
      apagadas aqui: treinar.py decide se as usa (ver docs/decisoes.md).
 
@@ -34,12 +37,43 @@ def normalizar_texto(serie):
     return serie.str.lower().str.strip().str.replace(r"\s+", " ", regex=True)
 
 
-def preparar(caminho=DADOS_BRUTOS):
+ATRIBUTOS_AUDIO = ["danceability", "energy", "loudness", "speechiness",
+                   "acousticness", "instrumentalness", "liveness", "valence",
+                   "tempo", "duracao_min", "key", "mode"]
+
+
+def agrupar_mesma_musica(dados):
+    """Une musica_id e gravações de áudio idêntico (union-find).
+
+    Duas faixas ficam no mesmo grupo se têm o mesmo artista + nome OU
+    exatamente os mesmos atributos de áudio; a relação é transitiva.
+    """
+    assinatura = (dados[ATRIBUTOS_AUDIO].fillna(-1).round(6).astype(str)
+                  .agg("|".join, axis=1))
+    pai = {}
+
+    def raiz(no):
+        while pai.setdefault(no, no) != no:
+            pai[no] = pai[pai[no]]
+            no = pai[no]
+        return no
+
+    for musica, audio in zip(dados["musica_id"], assinatura):
+        a, b = raiz("m:" + musica), raiz("a:" + audio)
+        if a != b:
+            pai[a] = b
+    raizes = pd.Series([raiz("m:" + m) for m in dados["musica_id"]], index=dados.index)
+    return pd.factorize(raizes)[0]
+
+
+def preparar(caminho=DADOS_BRUTOS, semente=SEMENTE, mostrar=True):
+    """Limpa o CSV original. `semente` controla o sorteio do gênero (passo 3)."""
     etapas = []
 
     def registrar(nome, tabela):
         etapas.append({"etapa": nome, "linhas": len(tabela)})
-        print(f"{nome:<55} {len(tabela):>7} linhas")
+        if mostrar:
+            print(f"{nome:<55} {len(tabela):>7} linhas")
 
     dados = pd.read_csv(caminho)
     registrar("0. CSV original", dados)
@@ -57,7 +91,7 @@ def preparar(caminho=DADOS_BRUTOS):
     variacao = dados.groupby("track_id")[colunas_fixas].nunique().max()
     if (variacao > 1).any():
         raise ValueError(f"Atributos variam no mesmo track_id: {variacao[variacao > 1]}")
-    embaralhados = dados.sample(frac=1, random_state=SEMENTE)
+    embaralhados = dados.sample(frac=1, random_state=semente)
     n_generos = embaralhados.groupby("track_id")["track_genre"].nunique()
     dados = (embaralhados
              .groupby("track_id", as_index=False, sort=False)
@@ -79,8 +113,10 @@ def preparar(caminho=DADOS_BRUTOS):
     dados["musica_id"] = (normalizar_texto(dados["artists"]) + " || "
                           + normalizar_texto(dados["track_name"]))
     dados["popularidade_zero"] = (dados[ALVO] == 0).astype(int)
+    dados["grupo_id"] = agrupar_mesma_musica(dados)
+    dados["artista_principal"] = normalizar_texto(dados["artists"].str.split(";").str[0])
 
-    ordem = ["track_id", "musica_id", "artists", "album_name", "track_name",
+    ordem = ["track_id", "musica_id", "grupo_id", "artista_principal", "artists", "album_name", "track_name",
              ALVO, "popularidade_zero", "track_genre", "duracao_min",
              "explicit", "danceability", "energy", "key", "loudness", "mode",
              "speechiness", "acousticness", "instrumentalness", "liveness",
@@ -97,6 +133,10 @@ def preparar(caminho=DADOS_BRUTOS):
         "musicas_unicas_artista_nome": int(dados["musica_id"].nunique()),
         "musicas_com_mais_de_um_track_id": int(
             (dados.groupby("musica_id")["track_id"].nunique() > 1).sum()),
+        "grupos_mesma_musica_ou_mesmo_audio": int(dados["grupo_id"].nunique()),
+        "grupos_unindo_titulos_diferentes_com_audio_identico": int(
+            (dados.groupby("grupo_id")["musica_id"].nunique() > 1).sum()),
+        "artistas_principais": int(dados["artista_principal"].nunique()),
         "tempo_zero_para_ausente": tempo_zero,
         "time_signature_0_ou_1_para_ausente": compasso_invalido,
         "popularidade_zero": {
