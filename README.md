@@ -43,35 +43,37 @@ ou criada, está em [`docs/dicionario_dados.md`](docs/dicionario_dados.md).
 
 ### Resultados
 
-Conjunto de teste: **16.066 faixas** (20%) de músicas que não aparecem no
-treino. Hiperparâmetros escolhidos por validação cruzada agrupada (5 folds).
+Conjunto de teste: **16.095 faixas** (20%) de músicas que não aparecem no
+treino (nem em outra versão, nem com áudio idêntico sob outro título).
+Hiperparâmetros escolhidos por validação cruzada agrupada (5 folds).
 
 | Modelo | RMSE (val. cruzada) | MAE | MSE | RMSE | R² |
 |---|---:|---:|---:|---:|---:|
-| Dummy (sempre a média) | 18,16 | 15,09 | 327,5 | 18,10 | 0,000 |
-| Média do gênero | 13,59 | 9,85 | 188,9 | 13,75 | 0,423 |
-| Ridge (α = 1) | 13,52 | 9,79 | 187,0 | 13,68 | 0,429 |
-| Random Forest | 13,99 | 10,42 | 197,9 | 14,07 | 0,396 |
-| **HistGradientBoosting** | **13,17** | **9,31** | **176,9** | **13,30** | **0,460** |
+| Dummy (sempre a média) | 18,13 | 15,21 | 332,3 | 18,23 | 0,000 |
+| Média do gênero | 13,60 | 9,82 | 188,7 | 13,74 | 0,432 |
+| Ridge (α = 1) | 13,52 | 9,76 | 186,6 | 13,66 | 0,439 |
+| Random Forest | 13,98 | 10,41 | 198,2 | 14,08 | 0,404 |
+| **HistGradientBoosting** | **13,18** | **9,24** | **176,0** | **13,27** | **0,470** |
 
-- O **HistGradientBoosting** foi o melhor: erra em média **9,3 pontos** de
-  popularidade (o Dummy erra 15,1).
-- **O gênero domina.** Sozinho, ele já explica R² = 0,42; os atributos de áudio
+- O **HistGradientBoosting** foi o melhor: erra em média **9,2 pontos** de
+  popularidade (o Dummy erra 15,2). Em 5 divisões diferentes, R² = 0,471 ± 0,005.
+- **O gênero domina.** Sozinho, ele já explica R² = 0,43; os atributos de áudio
   acrescentam cerca de 0,04. Na importância por permutação, embaralhar o
-  gênero aumenta o RMSE em 6,8 pontos; o segundo atributo (`instrumentalness`)
-  aumenta só 0,3.
+  gênero aumenta o RMSE em 6,9 pontos; o segundo atributo (`instrumentalness`)
+  aumenta só 0,4.
 - **O modelo puxa as previsões para a média:** superestima faixas pouco
-  populares (+11,4 pontos na faixa 1–20) e subestima hits (−32,6 na faixa
+  populares (+11,4 pontos na faixa 1–20) e subestima hits (−33,4 na faixa
   81–100). Ele não serve para "descobrir hits".
-- **Experimentos** (mesmos hiperparâmetros): incluir a popularidade zero
-  derruba o R² para 0,354; usar divisão aleatória em vez de agrupada sobe o R²
-  para 0,477 — ganho artificial, porque 1.216 faixas do teste têm outra versão
-  da mesma música no treino.
+- **Experimentos** (mesmos hiperparâmetros, 5 divisões cada): incluir a
+  popularidade zero derruba o R² para 0,350; a divisão aleatória o infla em
+  +0,016 (em 5 de 5 divisões), por vazamento entre versões da mesma música;
+  testar só com artistas que não estão no treino reduz o R² em 0,018. Refazer
+  o sorteio do gênero não muda os resultados.
 - **Fidelidade da LLM:** em 90 explicações geradas para cinco músicas
   (`avaliar_llm.py`), nenhuma citou número que não estivesse no resultado do
-  modelo; a limpeza automática eliminou o LaTeX que aparecia em até 6 de 30
-  respostas. Comparações ("acima/abaixo da média") e nomes de tonalidade são
-  calculados pelo programa, não pela LLM.
+  modelo. Erros vistos durante o desenvolvimento ("47,4 é inferior a 46,7",
+  tonalidade errada, LaTeX no texto) eram intermitentes e foram tratados por
+  construção: comparações e nomes são calculados pelo programa, não pela LLM.
 
 A popularidade depende de fatores que não estão nos dados (artista, marketing,
 playlists, data de lançamento); um R² moderado é um limite do problema, não
@@ -121,7 +123,7 @@ export NVIDIA_API_KEY="nvapi-..."
 
 Observações:
 
-- `treinar.py` leva cerca de 20 minutos em 4 núcleos (busca de hiperparâmetros). Para testar
+- `treinar.py` leva cerca de 20 minutos em 4 núcleos (busca de hiperparâmetros e experimentos). Para testar
   o código mais rápido: `treinar.py --rapido`. Para o experimento com a
   popularidade zero no modelo principal: `treinar.py --com-zeros`.
 - `processar.py` tem três modos: `--modo relato` (explica `resultado.json`),
@@ -191,31 +193,32 @@ Methodology decisions are documented (in Portuguese) in
 
 ### Results
 
-Test set: **16,066 tracks** (20%) from songs never seen in training.
+Test set: **16,095 tracks** (20%) from songs never seen in training (not as
+another version, nor as identical audio under another title).
 Hyperparameters chosen by grouped 5-fold cross-validation.
 
 | Model | RMSE (CV) | MAE | MSE | RMSE | R² |
 |---|---:|---:|---:|---:|---:|
-| Dummy (always the mean) | 18.16 | 15.09 | 327.5 | 18.10 | 0.000 |
-| Genre mean | 13.59 | 9.85 | 188.9 | 13.75 | 0.423 |
-| Ridge (α = 1) | 13.52 | 9.79 | 187.0 | 13.68 | 0.429 |
-| Random Forest | 13.99 | 10.42 | 197.9 | 14.07 | 0.396 |
-| **HistGradientBoosting** | **13.17** | **9.31** | **176.9** | **13.30** | **0.460** |
+| Dummy (always the mean) | 18.13 | 15.21 | 332.3 | 18.23 | 0.000 |
+| Genre mean | 13.60 | 9.82 | 188.7 | 13.74 | 0.432 |
+| Ridge (α = 1) | 13.52 | 9.76 | 186.6 | 13.66 | 0.439 |
+| Random Forest | 13.98 | 10.41 | 198.2 | 14.08 | 0.404 |
+| **HistGradientBoosting** | **13.18** | **9.24** | **176.0** | **13.27** | **0.470** |
 
-- HistGradientBoosting is the best model: mean absolute error of **9.3
-  popularity points** (Dummy: 15.1).
-- **Genre dominates:** on its own it explains R² = 0.42; audio features add
+- HistGradientBoosting is the best model: mean absolute error of **9.2
+  popularity points** (Dummy: 15.2); R² = 0.471 ± 0.005 over 5 splits.
+- **Genre dominates:** on its own it explains R² = 0.43; audio features add
   about 0.04.
 - The model **shrinks predictions toward the mean**: +11.4 points for tracks
-  with popularity 1–20 and −32.6 for hits (81–100).
-- Including zero-popularity tracks lowers R² to 0.354; a random (non-grouped)
-  split inflates it to 0.477 because 1,216 test tracks have another version of
-  the same song in training.
+  with popularity 1–20 and −33.4 for hits (81–100).
+- Experiments (5 splits each): including zero-popularity tracks lowers R² to
+  0.350; a random split inflates it by +0.016 (5 of 5 splits) through leakage
+  between versions of the same song; unseen artists lower it by 0.018.
 - **LLM faithfulness:** across 90 explanations for five songs
   (`avaliar_llm.py`), the LLM never cited a number absent from the model
-  output; automatic cleanup removed the LaTeX markup that appeared in up to 6
-  of 30 answers. Comparisons and key names are computed by the program, not by
-  the LLM.
+  output. Intermittent errors seen during development (wrong above/below
+  comparisons, wrong key names, LaTeX) were fixed by design: comparisons and
+  names are computed by the program, not by the LLM.
 
 ### How to run
 

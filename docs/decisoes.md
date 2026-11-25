@@ -78,9 +78,11 @@ para a seção de Metodologia e de Discussão do artigo.
 - Importância dos atributos por **permutação** no teste (6.000 faixas, 5
   repetições), medida como aumento do RMSE; o gênero é permutado como um único
   atributo (e não coluna one-hot por coluna).
-- Experimentos extras com os mesmos hiperparâmetros: (a) incluindo a
-  popularidade zero; (b) com divisão aleatória em vez de agrupada, para medir o
-  efeito do vazamento entre versões da mesma música.
+- Experimentos extras com os mesmos hiperparâmetros, cada um repetido em 5
+  divisões 80/20: (a) incluindo a popularidade zero; (b) divisão aleatória em
+  vez de agrupada, para medir o vazamento entre versões da mesma música;
+  (c) divisão agrupada por artista principal, para simular artistas novos.
+  Além disso, (d) o sorteio do gênero de D1 refeito com 3 outras sementes.
 
 ## D7 · Explicação e LLM (prever.py / processar.py / app.py)
 
@@ -118,7 +120,7 @@ para a seção de Metodologia e de Discussão do artigo.
 
 - Nenhum atributo de áudio tem correlação de Spearman com a popularidade acima
   de |0,20| (o maior é `instrumentalness`, −0,197).
-- Só o gênero explica **R² ≈ 0,44** no dataset todo (0,42 no teste) ao prever a média do gênero; a maior
+- Só o gênero explica **R² ≈ 0,44** no dataset todo (0,43 no teste) ao prever a média do gênero; a maior
   parte do que dá para prever vem do gênero.
 - A popularidade depende de fatores que **não estão no dataset**: artista,
   gravadora, marketing, playlists editoriais, data de lançamento, viralização.
@@ -127,38 +129,61 @@ para a seção de Metodologia e de Discussão do artigo.
 
 ## Resultados finais (treinar.py, execução completa)
 
-Teste: 16.066 faixas; treino: 64.327. Tempo total: ~19 min em 4 núcleos.
+Teste: 16.095 faixas; treino: 64.298 (divisão por `grupo_id`, semente 42).
+Tempo total: ~18 min em 4 núcleos.
 
 | Modelo | RMSE CV | MAE | MSE | RMSE | R² | Hiperparâmetros escolhidos |
 |---|---:|---:|---:|---:|---:|---|
-| Dummy (média) | 18,16 | 15,09 | 327,5 | 18,10 | 0,000 | — |
-| Média do gênero | 13,59 | 9,85 | 188,9 | 13,75 | 0,423 | — |
-| Ridge | 13,52 | 9,79 | 187,0 | 13,68 | 0,429 | α = 1 |
-| Random Forest | 13,99 | 10,42 | 197,9 | 14,07 | 0,396 | max_depth 30, min_samples_leaf 10, max_features 0,33 |
-| **HistGradientBoosting** | **13,17** | **9,31** | **176,9** | **13,30** | **0,460** | learning_rate 0,03, max_iter 600, max_leaf_nodes 63, min_samples_leaf 20, l2 1,0 |
+| Dummy (média) | 18,13 | 15,21 | 332,3 | 18,23 | 0,000 | — |
+| Média do gênero | 13,60 | 9,82 | 188,7 | 13,74 | 0,432 | — |
+| Ridge | 13,52 | 9,76 | 186,6 | 13,66 | 0,439 | α = 1 |
+| Random Forest | 13,98 | 10,41 | 198,2 | 14,08 | 0,404 | max_depth 30, min_samples_leaf 10, max_features 0,33 |
+| **HistGradientBoosting** | **13,18** | **9,24** | **176,0** | **13,27** | **0,470** | learning_rate 0,03, max_iter 600, max_leaf_nodes 63, min_samples_leaf 20, l2 1,0 |
 
 Leituras para a discussão:
 
 1. **Ranking igual na validação cruzada e no teste.** A escolha pelo RMSE da
-   validação cruzada coincide com o melhor no teste, sinal de que a avaliação
-   é estável.
+   validação cruzada coincide com o melhor no teste.
 2. **Random Forest ficou abaixo do Ridge.** Com 114 colunas one-hot de gênero,
    a floresta sorteia poucas colunas de gênero por divisão e aprende pior o
    efeito do gênero; o boosting, que corrige erros em sequência, aproveita melhor.
-3. **Ganho do áudio sobre o gênero é pequeno:** R² 0,423 → 0,460 (+0,037);
-   MAE 9,85 → 9,31.
-4. **Importância por permutação** (aumento do RMSE, pontos): gênero 6,82;
-   instrumentalness 0,32; energy 0,23; loudness 0,18; duração 0,16; demais
-   < 0,10; key, mode e time_signature ≈ 0.
+3. **Ganho do áudio sobre o gênero é pequeno:** R² 0,432 → 0,470 (+0,038);
+   MAE 9,82 → 9,24.
+4. **Importância por permutação** (aumento do RMSE, pontos): gênero 6,89;
+   instrumentalness 0,40; energy 0,21; loudness 0,15; duração 0,15;
+   acousticness 0,13; demais ≤ 0,11; key, mode e time_signature ≈ 0.
 5. **Viés por faixa de popularidade real** (previsto − real): 1–20: +11,4;
-   21–40: +4,7; 41–60: −6,0; 61–80: −16,9; 81–100: −32,6. O modelo encolhe as
+   21–40: +4,7; 41–60: −5,6; 61–80: −16,8; 81–100: −33,4. O modelo encolhe as
    previsões em direção à média; não identifica hits.
-6. **Experimentos:**
-   - com popularidade zero: R² 0,354, MAE 11,72 (conjunto de teste diferente,
-     com zeros; o modelo tenta prever um valor que é artefato da coleta);
-   - divisão aleatória (sem agrupar): R² 0,477, MAE 9,18, com 1.216 faixas do
-     teste tendo outra versão da mesma música no treino. O ganho (+0,017) é
-     otimismo causado pelo vazamento, não melhora real.
+
+### Experimentos repetidos em 5 divisões (sementes 42, 1, 2, 3, 4)
+
+Com uma divisão só, trocar as músicas do teste move o R² em ~0,01 — o mesmo
+tamanho das diferenças comparadas (o R² da divisão principal passou de 0,460
+para 0,470 só porque o reagrupamento de D2 mudou as músicas do teste). Por
+isso, cada cenário foi repetido nas mesmas 5 divisões, com os hiperparâmetros
+escolhidos, e as diferenças foram calculadas par a par.
+
+| Cenário (HistGradientBoosting) | R² (média ± desvio) | MAE |
+|---|---:|---:|
+| **Agrupado por música, sem zeros (protocolo)** | **0,471 ± 0,005** | 9,26 |
+| Agrupado por música, com zeros | 0,350 ± 0,006 | 11,76 |
+| Divisão aleatória, sem zeros | 0,488 ± 0,007 | 9,17 |
+| Agrupado por artista principal, sem zeros | 0,453 ± 0,015 | 9,43 |
+
+- **Zeros:** incluir a popularidade zero derruba o R² em 0,12 e aumenta o MAE em
+  2,5 pontos — o modelo passa a tentar prever um artefato da coleta (D3).
+- **Vazamento:** a divisão aleatória infla o R² em **+0,016 ± 0,007**, para cima
+  em **5 de 5** divisões (≈ 1.300 faixas do teste têm a mesma música no treino).
+  Diferença pequena, mas sistemática: é otimismo, não melhora real.
+- **Artista novo:** quando nenhum artista do teste aparece no treino, o R² cai
+  **0,018 ± 0,018** (mais baixo em 4 de 5 divisões). No protocolo principal,
+  89% das faixas do teste são de artistas vistos no treino. O efeito é pequeno:
+  o modelo não depende muito de "reconhecer" o som do artista, coerente com o
+  gênero dominar a importância.
+- **Sorteio do gênero** (D1, sementes 1, 2 e 3 em vez de 42): R² 0,476 ± 0,006,
+  MAE 9,22–9,24. A escolha do gênero para faixas em vários gêneros não muda as
+  conclusões.
 
 ## Avaliação da LLM (avaliar_llm.py)
 
@@ -170,22 +195,26 @@ fichas típicas de samba, metal, classical e k-pop) — `resultados/avaliacao_ll
 
 | Configuração | Número fora do JSON | Resposta com LaTeX | Tempo médio |
 |---|---:|---:|---:|
-| prompt original (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 0/30 | 3,0 s |
-| prompt revisado (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 6/30 | 3,5 s |
-| **final** (prompt revisado + números arredondados + temperatura 0 + limpeza) | **0/30** | **0/30** | 3,3 s |
+| prompt original (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 0/30 | 2,8 s |
+| prompt revisado (JSON completo, temperatura padrão, sem limpeza) | 0/30 | 0/30 | 3,0 s |
+| **final** (prompt revisado + números arredondados + temperatura 0 + limpeza) | **0/30** | **0/30** | 2,9 s |
 
 Leitura honesta dos resultados:
 
-- Nesta amostra, **nenhuma configuração citou número inexistente**. Os erros de
-  cópia vistos nos testes iniciais (ex.: "65,8" para uma previsão de 64,8, em
-  3 de 8 respostas) foram **intermitentes**; as salvaguardas (arredondar,
-  temperatura 0, instrução explícita) são baratas e foram mantidas, mas esta
-  avaliação não mostra diferença estatística entre as configurações nesse item.
-- O **LaTeX** aparece de forma irregular sem a limpeza (0 a 6 de 30 por rodada;
-  6 de 12 numa rodada preliminar) e **some com `limpar_texto()`**.
-- O verificador automático só confere números. Os **erros de raciocínio**
+- Nesta rodada final, **nenhuma configuração citou número inexistente nem usou
+  LaTeX**. As falhas vistas durante o desenvolvimento foram **intermitentes**:
+  erros de cópia (ex.: "65,8" para uma previsão de 64,8) em 3 de 8 respostas
+  num teste inicial; LaTeX sem a limpeza em 6 de 30 e 8 de 12 respostas em
+  rodadas anteriores. As salvaguardas (arredondar, temperatura 0, instrução
+  explícita, `limpar_texto()`) são baratas e foram mantidas, mas esta avaliação
+  **não mostra diferença** entre as configurações.
+- O verificador aceita arredondamento, por isso **não detecta arredondamento
+  excessivo**: numa versão intermediária, o JSON levava o R² com 1 casa e a LLM
+  escreveu "R² de 0,5" (o real é 0,470). O erro foi achado olhando a interface,
+  e corrigido mantendo 3 casas nas métricas.
+- O verificador só confere números. Os **erros de raciocínio**
   ("47,4 é inferior a 46,7", "tonalidade 5 = Ré") foram tratados por
   construção — o programa entrega as comparações e os nomes prontos — e
   conferidos manualmente no terminal e na interface.
-- Limitação: uma única LLM e um único tipo de pergunta (o relato inicial);
-  as respostas do chat e do assistente foram verificadas só manualmente.
+- Limitações: uma única LLM e um único tipo de pergunta (o relato inicial); as
+  respostas do chat e do assistente foram verificadas só manualmente.

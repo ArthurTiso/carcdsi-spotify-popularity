@@ -11,435 +11,435 @@
     "respostas": 30,
     "respostas_com_numero_fora_do_json": 0,
     "respostas_com_latex": 0,
-    "tempo_medio_s": 3.0,
+    "tempo_medio_s": 2.8,
     "detalhes": [
       {
         "genero": "pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.3
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.0
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.7
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "k-pop",
-        "numeros_citados": 18,
+        "numeros_citados": 7,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.6
       },
       {
-        "genero": "pop",
+        "genero": "samba",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.3
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 18,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.9
+      },
+      {
+        "genero": "k-pop",
         "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.9
       },
       {
-        "genero": "samba",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.2
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.7
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 14,
+        "genero": "pop",
+        "numeros_citados": 9,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.5
       },
       {
-        "genero": "k-pop",
-        "numeros_citados": 13,
+        "genero": "samba",
+        "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 6.2
+        "segundos": 2.9
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 17,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.5
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 18,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.9
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.8
       },
       {
         "genero": "pop",
         "numeros_citados": 15,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.9
+        "segundos": 2.8
       },
       {
         "genero": "samba",
         "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.9
+        "segundos": 2.6
       },
       {
         "genero": "metal",
-        "numeros_citados": 14,
+        "numeros_citados": 13,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.5
       },
       {
         "genero": "classical",
-        "numeros_citados": 15,
+        "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.7
       },
       {
         "genero": "k-pop",
-        "numeros_citados": 17,
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 10,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.8
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.2
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.0
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 13,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.3
       },
       {
-        "genero": "pop",
-        "numeros_citados": 19,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.9
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.6
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.4
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.0
-      },
-      {
         "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 16,
+        "numeros_citados": 11,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.5
       },
       {
-        "genero": "samba",
-        "numeros_citados": 15,
+        "genero": "pop",
+        "numeros_citados": 10,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.0
+        "segundos": 2.2
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
       },
       {
         "genero": "metal",
         "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.4
+        "segundos": 3.0
       },
       {
         "genero": "classical",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.6
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.6
-      },
-      {
-        "genero": "samba",
         "numeros_citados": 18,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.2
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.0
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": false,
         "segundos": 3.0
       },
       {
         "genero": "k-pop",
-        "numeros_citados": 14,
+        "numeros_citados": 11,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.0
+        "segundos": 2.6
       }
     ]
   },
   "prompt_revisado": {
     "respostas": 30,
     "respostas_com_numero_fora_do_json": 0,
-    "respostas_com_latex": 6,
-    "tempo_medio_s": 3.5,
+    "respostas_com_latex": 0,
+    "tempo_medio_s": 3.0,
     "detalhes": [
       {
         "genero": "pop",
-        "numeros_citados": 15,
+        "numeros_citados": 18,
         "numeros_fora_do_json": [],
-        "latex": true,
+        "latex": false,
         "segundos": 3.2
       },
       {
         "genero": "samba",
-        "numeros_citados": 19,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 4.0
-      },
-      {
-        "genero": "metal",
         "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.5
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 5.7
-      },
-      {
-        "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.7
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": true,
-        "segundos": 3.7
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.7
+        "segundos": 2.9
       },
       {
         "genero": "metal",
-        "numeros_citados": 14,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.5
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 19,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.5
-      },
-      {
-        "genero": "k-pop",
         "numeros_citados": 18,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.4
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": true,
-        "segundos": 4.3
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 17,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.3
       },
       {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.4
-      },
-      {
         "genero": "classical",
-        "numeros_citados": 17,
+        "numeros_citados": 13,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.3
+        "segundos": 2.6
       },
       {
         "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.7
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": true,
-        "segundos": 5.0
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 18,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.9
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.9
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 18,
+        "numeros_citados": 19,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.6
       },
       {
-        "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.1
-      },
-      {
         "genero": "pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": true,
-        "segundos": 3.1
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 18,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.3
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.5
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 20,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.8
-      },
-      {
-        "genero": "k-pop",
         "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.0
       },
       {
-        "genero": "pop",
+        "genero": "samba",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.9
+      },
+      {
+        "genero": "metal",
         "numeros_citados": 15,
         "numeros_fora_do_json": [],
-        "latex": true,
-        "segundos": 3.7
+        "latex": false,
+        "segundos": 2.8
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 21,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.5
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 15,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.9
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
       },
       {
         "genero": "samba",
+        "numeros_citados": 12,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.7
+      },
+      {
+        "genero": "metal",
         "numeros_citados": 18,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.6
+        "segundos": 3.3
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 17,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 6,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.3
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.7
       },
       {
         "genero": "metal",
         "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.6
+        "segundos": 3.2
       },
       {
         "genero": "classical",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.8
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.0
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.9
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 13,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.8
+      },
+      {
+        "genero": "metal",
         "numeros_citados": 17,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.8
+        "segundos": 3.3
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
       },
       {
         "genero": "k-pop",
         "numeros_citados": 19,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.6
+        "segundos": 3.3
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 17,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.0
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.3
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 21,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.4
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 20,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.3
       }
     ]
   },
@@ -447,140 +447,35 @@
     "respostas": 30,
     "respostas_com_numero_fora_do_json": 0,
     "respostas_com_latex": 0,
-    "tempo_medio_s": 3.3,
+    "tempo_medio_s": 2.9,
     "detalhes": [
       {
         "genero": "pop",
-        "numeros_citados": 21,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.9
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.1
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.8
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "k-pop",
         "numeros_citados": 18,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.4
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.5
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.5
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.1
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.0
-      },
-      {
-        "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.8
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 18,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.0
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.6
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "classical",
-        "numeros_citados": 17,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 10.5
-      },
-      {
-        "genero": "k-pop",
-        "numeros_citados": 15,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 2.9
-      },
-      {
-        "genero": "pop",
-        "numeros_citados": 20,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.5
-      },
-      {
-        "genero": "samba",
-        "numeros_citados": 16,
-        "numeros_fora_do_json": [],
-        "latex": false,
-        "segundos": 3.3
-      },
-      {
-        "genero": "metal",
-        "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.2
       },
       {
+        "genero": "samba",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.4
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.6
+      },
+      {
         "genero": "classical",
         "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.0
+        "segundos": 2.8
       },
       {
         "genero": "k-pop",
@@ -598,49 +493,119 @@
       },
       {
         "genero": "samba",
-        "numeros_citados": 15,
+        "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.4
+        "segundos": 2.3
       },
       {
         "genero": "metal",
         "numeros_citados": 18,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 3.4
+        "segundos": 3.0
       },
       {
         "genero": "classical",
         "numeros_citados": 14,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.7
+        "segundos": 2.2
       },
       {
         "genero": "k-pop",
         "numeros_citados": 15,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.6
+        "segundos": 2.4
       },
       {
         "genero": "pop",
-        "numeros_citados": 15,
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.4
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.5
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 16,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.5
       },
       {
-        "genero": "samba",
-        "numeros_citados": 15,
+        "genero": "k-pop",
+        "numeros_citados": 17,
         "numeros_fora_do_json": [],
         "latex": false,
-        "segundos": 2.9
+        "segundos": 2.8
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.4
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.7
       },
       {
         "genero": "metal",
+        "numeros_citados": 18,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 14,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.2
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 18,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 21,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.8
+      },
+      {
+        "genero": "samba",
         "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.4
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 19,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 3.1
@@ -654,7 +619,42 @@
       },
       {
         "genero": "k-pop",
-        "numeros_citados": 15,
+        "numeros_citados": 18,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.7
+      },
+      {
+        "genero": "pop",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.4
+      },
+      {
+        "genero": "samba",
+        "numeros_citados": 17,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.6
+      },
+      {
+        "genero": "metal",
+        "numeros_citados": 19,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 3.1
+      },
+      {
+        "genero": "classical",
+        "numeros_citados": 16,
+        "numeros_fora_do_json": [],
+        "latex": false,
+        "segundos": 2.5
+      },
+      {
+        "genero": "k-pop",
+        "numeros_citados": 17,
         "numeros_fora_do_json": [],
         "latex": false,
         "segundos": 2.8

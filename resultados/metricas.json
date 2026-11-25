@@ -2,78 +2,78 @@
   "avaliacao": {
     "modelo": "HistGradientBoosting",
     "teste": {
-      "MAE": 9.306,
-      "MSE": 176.891,
-      "RMSE": 13.3,
-      "R2": 0.4599
+      "MAE": 9.235,
+      "MSE": 175.984,
+      "RMSE": 13.266,
+      "R2": 0.4703
     },
     "referencia_dummy": {
-      "MAE": 15.086,
-      "MSE": 327.544,
-      "RMSE": 18.098,
+      "MAE": 15.208,
+      "MSE": 332.255,
+      "RMSE": 18.228,
       "R2": -0.0
     },
     "referencia_media_genero": {
-      "MAE": 9.845,
-      "MSE": 188.919,
-      "RMSE": 13.745,
-      "R2": 0.4232
+      "MAE": 9.818,
+      "MSE": 188.693,
+      "RMSE": 13.737,
+      "R2": 0.4321
     },
-    "n_treino": 64327,
-    "n_teste": 16066,
-    "divisao": "80/20 GroupShuffleSplit por musica_id, random_state=42",
+    "n_treino": 64298,
+    "n_teste": 16095,
+    "divisao": "80/20 GroupShuffleSplit por grupo_id (mesma música ou mesmo áudio), random_state=42",
     "validacao_cruzada": "GroupKFold 5 folds no treino, métrica RMSE",
     "popularidade_zero": "removida (alvo ausente)"
   },
   "modelos": {
     "Dummy (média)": {
-      "cv_rmse": 18.162,
+      "cv_rmse": 18.129,
       "hiperparametros": {},
       "teste": {
-        "MAE": 15.086,
-        "MSE": 327.544,
-        "RMSE": 18.098,
+        "MAE": 15.208,
+        "MSE": 332.255,
+        "RMSE": 18.228,
         "R2": -0.0
       }
     },
     "Média do gênero": {
-      "cv_rmse": 13.592,
+      "cv_rmse": 13.596,
       "hiperparametros": {},
       "teste": {
-        "MAE": 9.845,
-        "MSE": 188.919,
-        "RMSE": 13.745,
-        "R2": 0.4232
+        "MAE": 9.818,
+        "MSE": 188.693,
+        "RMSE": 13.737,
+        "R2": 0.4321
       }
     },
     "Ridge": {
-      "cv_rmse": 13.515,
+      "cv_rmse": 13.524,
       "hiperparametros": {
         "alpha": 1
       },
       "teste": {
-        "MAE": 9.788,
-        "MSE": 187.04,
-        "RMSE": 13.676,
-        "R2": 0.429
+        "MAE": 9.763,
+        "MSE": 186.553,
+        "RMSE": 13.658,
+        "R2": 0.4385
       }
     },
     "Random Forest": {
-      "cv_rmse": 13.987,
+      "cv_rmse": 13.983,
       "hiperparametros": {
         "min_samples_leaf": 10,
         "max_features": 0.33,
         "max_depth": 30
       },
       "teste": {
-        "MAE": 10.422,
-        "MSE": 197.89,
-        "RMSE": 14.067,
-        "R2": 0.3958
+        "MAE": 10.412,
+        "MSE": 198.172,
+        "RMSE": 14.077,
+        "R2": 0.4035
       }
     },
     "HistGradientBoosting": {
-      "cv_rmse": 13.172,
+      "cv_rmse": 13.177,
       "hiperparametros": {
         "min_samples_leaf": 20,
         "max_leaf_nodes": 63,
@@ -82,127 +82,221 @@
         "l2_regularization": 1.0
       },
       "teste": {
-        "MAE": 9.306,
-        "MSE": 176.891,
-        "RMSE": 13.3,
-        "R2": 0.4599
+        "MAE": 9.235,
+        "MSE": 175.984,
+        "RMSE": 13.266,
+        "R2": 0.4703
       }
     }
   },
   "importancia_permutacao": {
     "danceability": {
-      "media": 0.0957,
-      "desvio": 0.0241
+      "media": 0.1067,
+      "desvio": 0.015
     },
     "energy": {
-      "media": 0.2339,
-      "desvio": 0.0325
+      "media": 0.2065,
+      "desvio": 0.0217
     },
     "loudness": {
-      "media": 0.1839,
-      "desvio": 0.0264
+      "media": 0.1549,
+      "desvio": 0.0124
     },
     "speechiness": {
-      "media": 0.0882,
-      "desvio": 0.0173
+      "media": 0.0979,
+      "desvio": 0.0135
     },
     "acousticness": {
-      "media": 0.0847,
-      "desvio": 0.0161
+      "media": 0.1334,
+      "desvio": 0.0119
     },
     "instrumentalness": {
-      "media": 0.3177,
-      "desvio": 0.048
+      "media": 0.3962,
+      "desvio": 0.0289
     },
     "liveness": {
-      "media": 0.0337,
-      "desvio": 0.0086
+      "media": 0.0617,
+      "desvio": 0.0119
     },
     "valence": {
-      "media": 0.0873,
-      "desvio": 0.0134
+      "media": 0.0967,
+      "desvio": 0.0101
     },
     "tempo": {
-      "media": 0.0303,
+      "media": 0.0293,
       "desvio": 0.0158
     },
     "duracao_min": {
-      "media": 0.1615,
-      "desvio": 0.0259
+      "media": 0.1485,
+      "desvio": 0.0202
     },
     "explicit": {
-      "media": 0.06,
-      "desvio": 0.0072
+      "media": 0.0566,
+      "desvio": 0.0107
     },
     "mode": {
-      "media": -0.015,
-      "desvio": 0.0055
-    },
-    "key": {
-      "media": 0.0027,
-      "desvio": 0.0126
-    },
-    "time_signature": {
-      "media": 0.0176,
+      "media": -0.0096,
       "desvio": 0.0031
     },
+    "key": {
+      "media": 0.0093,
+      "desvio": 0.0056
+    },
+    "time_signature": {
+      "media": 0.0131,
+      "desvio": 0.0056
+    },
     "track_genre": {
-      "media": 6.8184,
-      "desvio": 0.1056
+      "media": 6.8858,
+      "desvio": 0.0665
     }
   },
   "experimentos": {
     "principal (agrupada, sem zeros)": {
-      "MAE": 9.306,
-      "MSE": 176.891,
-      "RMSE": 13.3,
-      "R2": 0.4599,
-      "faixas_teste_com_mesma_musica_no_treino": 0
+      "MAE": 9.235,
+      "MSE": 175.984,
+      "RMSE": 13.266,
+      "R2": 0.4703,
+      "n_treino": 64298,
+      "n_teste": 16095,
+      "faixas_teste_com_mesma_musica_no_treino": 0,
+      "faixas_teste_com_artista_no_treino": 0.889
     },
-    "com zeros (agrupada)": {
-      "MAE": 11.718,
-      "MSE": 274.94,
-      "RMSE": 16.581,
-      "R2": 0.3538,
-      "n_treino": 71730,
-      "n_teste": 18010,
-      "faixas_teste_com_mesma_musica_no_treino": 0
+    "cenarios_em_varias_divisoes": {
+      "sementes_divisao": [
+        42,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cenarios": {
+        "agrupada por musica, sem zeros (protocolo principal)": {
+          "R2_media": 0.4713,
+          "R2_desvio": 0.0054,
+          "MAE_media": 9.259,
+          "MAE_desvio": 0.073,
+          "R2_por_divisao": [
+            0.4703,
+            0.4646,
+            0.4793,
+            0.4669,
+            0.4756
+          ],
+          "faixas_teste_com_mesma_musica_no_treino_media": 0.0,
+          "faixas_teste_com_artista_no_treino_media": 0.89
+        },
+        "agrupada por musica, com zeros": {
+          "R2_media": 0.3497,
+          "R2_desvio": 0.0064,
+          "MAE_media": 11.76,
+          "MAE_desvio": 0.098,
+          "R2_por_divisao": [
+            0.3599,
+            0.3443,
+            0.3539,
+            0.348,
+            0.3424
+          ],
+          "faixas_teste_com_mesma_musica_no_treino_media": 0.0,
+          "faixas_teste_com_artista_no_treino_media": 0.897
+        },
+        "divisao aleatoria, sem zeros": {
+          "R2_media": 0.4876,
+          "R2_desvio": 0.0072,
+          "MAE_media": 9.174,
+          "MAE_desvio": 0.036,
+          "R2_por_divisao": [
+            0.4772,
+            0.4808,
+            0.4906,
+            0.4946,
+            0.4946
+          ],
+          "faixas_teste_com_mesma_musica_no_treino_media": 1299.6,
+          "faixas_teste_com_artista_no_treino_media": 0.893,
+          "diferenca_R2_vs_principal_por_divisao": [
+            0.0069,
+            0.0162,
+            0.0113,
+            0.0277,
+            0.019
+          ],
+          "diferenca_R2_vs_principal_media": 0.0162,
+          "diferenca_R2_vs_principal_desvio": 0.0071
+        },
+        "agrupada por artista principal, sem zeros": {
+          "R2_media": 0.4532,
+          "R2_desvio": 0.0147,
+          "MAE_media": 9.432,
+          "MAE_desvio": 0.116,
+          "R2_por_divisao": [
+            0.4448,
+            0.4821,
+            0.4449,
+            0.4437,
+            0.4503
+          ],
+          "faixas_teste_com_mesma_musica_no_treino_media": 22.6,
+          "faixas_teste_com_artista_no_treino_media": 0.0,
+          "diferenca_R2_vs_principal_por_divisao": [
+            -0.0255,
+            0.0175,
+            -0.0344,
+            -0.0232,
+            -0.0253
+          ],
+          "diferenca_R2_vs_principal_media": -0.0182,
+          "diferenca_R2_vs_principal_desvio": 0.0183
+        }
+      }
     },
-    "divisao aleatoria (sem zeros)": {
-      "MAE": 9.177,
-      "MSE": 170.012,
-      "RMSE": 13.039,
-      "R2": 0.4772,
-      "n_treino": 64314,
-      "n_teste": 16079,
-      "faixas_teste_com_mesma_musica_no_treino": 1216
+    "sorteio do genero com outras sementes": {
+      "sementes": [
+        1,
+        2,
+        3
+      ],
+      "R2_por_semente": [
+        0.4774,
+        0.4817,
+        0.4684
+      ],
+      "MAE_por_semente": [
+        9.217,
+        9.238,
+        9.225
+      ],
+      "R2_media": 0.4758,
+      "R2_desvio": 0.0055,
+      "MAE_media": 9.227
     }
   },
   "erro_por_faixa_real": {
     "1-20": {
-      "faixas": 3118,
-      "MAE": 11.82,
-      "vies": 11.42
+      "faixas": 3199,
+      "MAE": 11.77,
+      "vies": 11.36
     },
     "21-40": {
-      "faixas": 6059,
-      "MAE": 6.84,
-      "vies": 4.69
+      "faixas": 5965,
+      "MAE": 6.81,
+      "vies": 4.67
     },
     "41-60": {
-      "faixas": 5127,
-      "MAE": 7.73,
-      "vies": -5.96
+      "faixas": 5160,
+      "MAE": 7.46,
+      "vies": -5.55
     },
     "61-80": {
-      "faixas": 1659,
-      "MAE": 17.02,
-      "vies": -16.86
+      "faixas": 1658,
+      "MAE": 16.95,
+      "vies": -16.83
     },
     "81-100": {
-      "faixas": 103,
-      "MAE": 32.58,
-      "vies": -32.58
+      "faixas": 113,
+      "MAE": 33.39,
+      "vies": -33.39
     }
   },
   "versoes": {
@@ -210,5 +304,5 @@
     "sklearn": "1.9.1"
   },
   "busca_rapida": false,
-  "tempo_total_s": 1131
+  "tempo_total_s": 1101
 }

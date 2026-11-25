@@ -39,7 +39,8 @@ médio absoluto do modelo no teste; NÃO é a faixa do gênero) e compare com a
 média do gênero e a média geral do treino usando as frases prontas dos campos
 previsao_comparada_a_media_do_genero e previsao_comparada_a_media_geral (não
 decida sozinho se é acima ou abaixo). Para tonalidade, modo, compasso e
-conteúdo explícito, use os nomes de atributos_legiveis.
+conteúdo explícito, escreva os valores de atributos_legiveis (ex.: "tonalidade
+Fá", "modo maior"), sem citar nomes de campos do JSON.
 Explique as contribuições SHAP em pontos de popularidade: valor base +
 contribuições = previsão. Positivo aumenta a previsão; negativo diminui.
 Priorize os fatores de maior contribuição absoluta (no máximo cinco).
@@ -142,18 +143,20 @@ def ler_contexto(pasta=PASTA):
 def resumo_para_llm(resultado):
     """Só o que a LLM precisa, com números já arredondados para citar.
 
-    Atributos de áudio mantêm 3 casas (são valores de 0 a 1); os demais números
-    (previsão, médias, SHAP, métricas) vão com 1 casa decimal.
+    Previsão, médias e SHAP (escala 0–100) vão com 1 casa decimal. Atributos de
+    áudio (0 a 1) e métricas do modelo (R² ≈ 0,47) mantêm 3 casas: com 1 casa,
+    o R² viraria "0,5".
     """
     resumo = {k: resultado[k] for k in ("previsao", "contexto_treino",
                                         "explicacao_shap", "limites")
-              if k in resultado} | {
-        "avaliacao_teste": {k: resultado["avaliacao_teste"][k]
-                            for k in ("modelo", "teste", "referencia_media_genero")},
-    }
+              if k in resultado}
+    avaliacao = {k: resultado["avaliacao_teste"][k]
+                 for k in ("modelo", "teste", "referencia_media_genero")}
     return {"atributos": arredondar(resultado["atributos"], 3),
             "atributos_legiveis": resultado.get("atributos_legiveis", {}),
-            **arredondar(resumo, 1), "descricao_atributos": DESCRICOES}
+            **arredondar(resumo, 1),
+            "avaliacao_teste": arredondar(avaliacao, 3),
+            "descricao_atributos": DESCRICOES}
 
 
 def montar_mensagens_relato(resultado, pergunta=PERGUNTA_RELATO):

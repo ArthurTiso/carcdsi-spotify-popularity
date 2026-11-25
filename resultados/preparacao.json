@@ -24,6 +24,9 @@
   "track_ids_em_mais_de_um_genero": 16299,
   "musicas_unicas_artista_nome": 81206,
   "musicas_com_mais_de_um_track_id": 4747,
+  "grupos_mesma_musica_ou_mesmo_audio": 80810,
+  "grupos_unindo_titulos_diferentes_com_audio_identico": 366,
+  "artistas_principais": 17639,
   "tempo_zero_para_ausente": 157,
   "time_signature_0_ou_1_para_ausente": 1008,
   "popularidade_zero": {

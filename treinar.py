@@ -437,7 +437,8 @@ def main():
         "referencia_dummy": tabela["Dummy (média)"]["teste"],
         "referencia_media_genero": tabela["Média do gênero"]["teste"],
         "n_treino": len(Xt), "n_teste": len(Xe),
-        "divisao": "80/20 GroupShuffleSplit por musica_id, random_state=42",
+        "divisao": "80/20 GroupShuffleSplit por grupo_id (mesma música ou mesmo áudio), "
+                   "random_state=42",
         "validacao_cruzada": f"GroupKFold {N_FOLDS} folds no treino, métrica RMSE",
         "popularidade_zero": "incluída" if args.com_zeros else "removida (alvo ausente)",
     }

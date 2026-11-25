@@ -41,87 +41,87 @@
     "track_genre": "gênero musical"
   },
   "previsao": {
-    "popularidade_prevista": 64.82,
+    "popularidade_prevista": 65.31,
     "escala": "0 a 100 (índice de popularidade do Spotify)",
-    "erro_medio_absoluto_no_teste": 9.306,
+    "erro_medio_absoluto_no_teste": 9.235,
     "intervalo_da_previsao": [
-      55.5,
-      74.1
+      56.1,
+      74.5
     ],
     "intervalo_da_previsao_significa": "previsão ± erro médio absoluto do modelo no teste (não é a faixa de popularidade do gênero)",
     "modelo": "HistGradientBoosting"
   },
   "contexto_treino": {
-    "popularidade_media_geral": 37.08,
-    "popularidade_media_do_genero": 60.65,
-    "previsao_comparada_a_media_do_genero": "4.2 pontos acima da média (60.6)",
-    "previsao_comparada_a_media_geral": "27.7 pontos acima da média (37.1)",
-    "faixas_do_genero_no_treino": 375,
-    "posicao_do_genero": "1º de 114 gêneros por popularidade média"
+    "popularidade_media_geral": 37.09,
+    "popularidade_media_do_genero": 57.9,
+    "previsao_comparada_a_media_do_genero": "7.4 pontos acima da média (57.9)",
+    "previsao_comparada_a_media_geral": "28.2 pontos acima da média (37.1)",
+    "faixas_do_genero_no_treino": 410,
+    "posicao_do_genero": "4º de 114 gêneros por popularidade média"
   },
   "explicacao_shap": {
     "saida_explicada": "popularidade prevista (antes de limitar a 0..100)",
     "metodo": "shap.TreeExplainer; one-hot somado por atributo original",
-    "valor_base": 37.081,
+    "valor_base": 37.087,
     "contribuicoes_por_atributo": {
-      "track_genre": 19.423,
-      "instrumentalness": 3.109,
-      "key": -2.265,
-      "energy": 1.544,
-      "loudness": 1.485,
-      "danceability": 1.256,
-      "tempo": 0.924,
-      "duracao_min": 0.904,
-      "speechiness": 0.583,
-      "liveness": 0.56,
-      "acousticness": 0.388,
-      "explicit": -0.226,
-      "valence": 0.179,
-      "mode": -0.136,
-      "time_signature": 0.006
+      "track_genre": 19.048,
+      "instrumentalness": 3.034,
+      "loudness": 1.601,
+      "energy": 1.386,
+      "duracao_min": 1.082,
+      "danceability": 0.763,
+      "speechiness": 0.642,
+      "tempo": 0.553,
+      "acousticness": 0.539,
+      "valence": -0.422,
+      "explicit": -0.387,
+      "key": 0.338,
+      "mode": 0.091,
+      "liveness": -0.022,
+      "time_signature": -0.021
     },
-    "soma_reconstruida": 64.816
+    "soma_reconstruida": 65.311
   },
   "importancia_global_permutacao": {
-    "danceability": 0.0957,
-    "energy": 0.2339,
-    "loudness": 0.1839,
-    "speechiness": 0.0882,
-    "acousticness": 0.0847,
-    "instrumentalness": 0.3177,
-    "liveness": 0.0337,
-    "valence": 0.0873,
-    "tempo": 0.0303,
-    "duracao_min": 0.1615,
-    "explicit": 0.06,
-    "mode": -0.015,
-    "key": 0.0027,
-    "time_signature": 0.0176,
-    "track_genre": 6.8184
+    "danceability": 0.1067,
+    "energy": 0.2065,
+    "loudness": 0.1549,
+    "speechiness": 0.0979,
+    "acousticness": 0.1334,
+    "instrumentalness": 0.3962,
+    "liveness": 0.0617,
+    "valence": 0.0967,
+    "tempo": 0.0293,
+    "duracao_min": 0.1485,
+    "explicit": 0.0566,
+    "mode": -0.0096,
+    "key": 0.0093,
+    "time_signature": 0.0131,
+    "track_genre": 6.8858
   },
   "avaliacao_teste": {
     "modelo": "HistGradientBoosting",
     "teste": {
-      "MAE": 9.306,
-      "MSE": 176.891,
-      "RMSE": 13.3,
-      "R2": 0.4599
+      "MAE": 9.235,
+      "MSE": 175.984,
+      "RMSE": 13.266,
+      "R2": 0.4703
     },
     "referencia_dummy": {
-      "MAE": 15.086,
-      "MSE": 327.544,
-      "RMSE": 18.098,
+      "MAE": 15.208,
+      "MSE": 332.255,
+      "RMSE": 18.228,
       "R2": -0.0
     },
     "referencia_media_genero": {
-      "MAE": 9.845,
-      "MSE": 188.919,
-      "RMSE": 13.745,
-      "R2": 0.4232
+      "MAE": 9.818,
+      "MSE": 188.693,
+      "RMSE": 13.737,
+      "R2": 0.4321
     },
-    "n_treino": 64327,
-    "n_teste": 16066,
-    "divisao": "80/20 GroupShuffleSplit por musica_id, random_state=42",
+    "n_treino": 64298,
+    "n_teste": 16095,
+    "divisao": "80/20 GroupShuffleSplit por grupo_id (mesma música ou mesmo áudio), random_state=42",
     "validacao_cruzada": "GroupKFold 5 folds no treino, métrica RMSE",
     "popularidade_zero": "removida (alvo ausente)"
   },
